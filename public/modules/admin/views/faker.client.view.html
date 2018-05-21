@@ -1,0 +1,30 @@
+<!-- Data faker -->
+<div class="page faker" ng-controller="FakerController">
+
+	<h2>Generate Fake Entries</h2>
+
+	<form class="form-inline" ng-submit="truncate.submit(this)">
+		<div class="form-group">
+			<span>Empty collection for</span>
+			<select name="model" class="form-control" ng-model="truncate.data.model" name="model">
+				<option value="{{ m }}" ng-repeat="m in models">{{ getModelName(m) }}</option>
+			</select>
+			<button type="submit" class="btn btn-default">Empty Now</button>
+		</div>
+	</form>
+
+	<form class="form-inline" ng-submit="generate.submit(this)">
+		<div class="form-group">
+			<span>Generate fake entries for</span>
+			<select class="form-control" ng-model="generate.data.model" name="model">
+				<option value="{{ m }}" ng-repeat="m in models">{{ getModelName(m) }}</option>
+			</select>
+			<button type="submit" class="btn btn-default">Generate</button>
+			<select class="form-control" ng-model="generate.data.amount" name="amount">
+				<option value="{{ i }}" ng-repeat="i in [1, 10, 50, 100, 200, 500, 1000]">{{ i }}</option>
+			</select>
+			<span>entries</span>
+		</div>
+	</form>
+
+</div>

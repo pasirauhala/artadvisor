@@ -1,0 +1,20 @@
+{
+  "apps" : [{
+    "name"      : "artadvisor-test",
+    "script"    : "server.js",
+    "env_test" : {
+      "NODE_ENV": "test",
+      "PORT": 8002
+    }
+  }],
+  "deploy" : {
+    "test" : {
+      "user" : "root",
+      "host" : "185.26.51.44",
+      "repo" : "git@github.com:CodersForHire/art-advisor.git",
+      "ref"  : "origin/test",
+      "path" : "/root/artadvisor-test",
+      "post-deploy": "npm install && pm2 startOrRestart test.json --env test && service apache2 restart"
+    }
+  }
+}

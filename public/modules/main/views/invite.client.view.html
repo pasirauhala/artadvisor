@@ -1,0 +1,30 @@
+<div class="invite" ng-controller="InviteController">
+
+  <div class="container">
+    <h1><a ng-click="back()"><i class="ion-ios-arrow-back"></i></a>{{ 'Invite Friends' | lang }}</h1>
+    <div class="content">
+
+      <div class="wrap">
+        <div class="form">
+          <form class="default" ng-submit="submit()" autocomplete="off" ng-disabled="busy">
+            <p>
+              {{ 'Type your friends\' email address below and we\'ll send them an invitation' | lang }}
+            </p>
+            <div class="inputs">
+              <div class="input content">
+                <label>
+                  <textarea placeholder="{{ 'type one email per line' | lang }}" name="emails" ng-model="input.emails"></textarea>
+                </label>
+              </div>
+            </div>
+            <div class="buttons">
+              <span ng-class="{ empty: !response.message, success: response.success, error: !response.success }" class="message">{{ response.message | lang }}</span>
+              <button type="submit" class="submit"><i class="ion-android-exit rotate-90"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

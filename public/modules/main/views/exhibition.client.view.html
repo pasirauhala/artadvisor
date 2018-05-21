@@ -1,0 +1,202 @@
+<div class="exhibition" ng-controller="ExhibitionController">
+
+  <div class="container">
+    <div class="user-menu">
+      <table>
+        <tbody>
+          <tr>
+            <td class="side left close">
+              <a tooltips tooltip-side="bottom" tooltip-lazy="false" tooltip-content="Close" ng-click="menu.back()"><i class="ion-android-close"></i></a>
+            </td>
+            <td class="others">
+              <a tooltips tooltip-side="bottom" tooltip-lazy="false" tooltip-content="Report this page" ng-click="menu.others()">
+                <i class="fa fa-circle"></i>
+                <i class="fa fa-circle"></i>
+                <i class="fa fa-circle"></i>
+              </a>
+            </td>
+            <td class="recommend">
+              <a tooltips tooltip-side="bottom" tooltip-lazy="false" tooltip-content="{{ menu.recommended ? 'Remove from' : 'Add to' }} Recommended" ng-click="menu.recommend()"><i class="ion-ios-star{{ menu.recommended ? '' : '-outline' }}"></i></a>
+            </td>
+            <td class="favorite">
+              <a tooltips tooltip-side="bottom" tooltip-lazy="false" tooltip-content="{{ menu.favorited ? 'Remove from' : 'Add to' }} Favorites" ng-click="menu.favorite()"><i class="ion-ios-heart{{ menu.favorited ? '' : '-outline' }}"></i></a>
+            </td>
+            <td class="share">
+              <a tooltips tooltip-side="bottom" tooltip-lazy="false" tooltip-content="Share this page" ng-click="share.show()"><i class="ion-paper-airplane"></i></a>
+            </td>
+            <td class="side right location">
+              <a tooltips tooltip-side="bottom" tooltip-lazy="false" tooltip-content="Go to Map page" ui-sref="map({ event: exhibition.permalink })"><i class="ion-ios-location"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="photos container" ng-show="exhibition.photos.length">
+    <div class="gallery" hm-swipeleft="touch.flick($event, -1)" hm-swiperight="touch.flick($event, 1)" hm-dragstart="touch.drag.start($event)" hm-drag="touch.drag.on($event)" hm-dragend="touch.drag.end($event)">
+      <ul>
+        <li ng-repeat="photo in exhibition.photos track by $index">
+          <img ng-click="modal.set(exhibition.photos, 'order', photo.order)" ng-src="{{ photo.photo.source | thumb:'0x264' }}" />
+        </li>
+      </ul>
+      <div class="fade left"></div>
+      <div class="fade right"></div>
+    </div>
+  </div>
+
+  <div class="information">
+    <div class="container">
+
+      <div class="column column-left">
+        <div class="date">
+          {{ exhibition.date.start | amDateFormat:'D.M.YYYY' }} - {{ exhibition.date.end | amDateFormat:'D.M.YYYY' }}
+        </div>
+        <h2>
+          {{ exhibition.name }}
+          <a class="edit-exhibition" ui-sref="exhibition-edit({ permalink: exhibition.permalink })" ng-if="exhibition.owned">(Edit Event)</a>
+        </h2>
+        <h3>
+          <span ng-repeat="artist in exhibition.artists track by $index" ng-class="{ user: artist.user }"><a ng-if="artist.user" ui-sref="artist({ username: artist.user.username })">{{ artist.user.fullname }}</a><span ng-if="!artist.user">{{ artist.nonUser.fullname }}</span>{{ $last ? '' : ', ' }}</span>
+        </h3>
+        <div class="divider"></div>
+        <div class="location">
+          <a ui-sref="venue({ permalink: exhibition.venue.permalink })">
+            <i class="fa fa-map-marker"></i> {{ exhibition.venue.name }} - {{ exhibition.venue.address.city | lang:'':exhibition.venue.address.lang }} ({{ exhibition.venue.address.coordinates | distance }})
+          </a>
+        </div>
+        <div class="open">
+          {{ exhibition | openstatus | lang: 'open' }}
+        </div>
+        <div class="description" ng-bind-html="exhibition.description | plainToHtml"></div>
+        <div class="others">
+          <ul>
+            <li class="genre">
+              <div class="title">{{ 'Genre' | lang }}</div>
+              <div class="value">
+                <span ng-repeat="genre in exhibition.genre track by $index">{{ (($index > 0) ? ', ' : '') }}<a ui-sref="search({ q: genre })">{{ genre | lang }}</a></span>
+              </div>
+            </li>
+            <li class="venue">
+              <div class="title">{{ 'Venue' | lang }}</div>
+              <div class="value"><a ui-sref="venue({ permalink: exhibition.venue.permalink })">{{ exhibition.venue.name }}</a></div>
+            </li>
+            <li class="address">
+              <div class="title">{{ 'Address' | lang }}</div>
+              <div class="value"><a ui-sref="venue({ permalink: exhibition.venue.permalink })">{{ exhibition.venue.address.line1 }}{{ (exhibition.venue.address.line1 && exhibition.venue.address.city) ? ', ' : '' }}{{ exhibition.venue.address.city | lang:'':exhibition.venue.address.lang }}</a></div>
+            </li>
+            <li class="opening-hours">
+              <div class="title">{{ 'Opening Hours' | lang }}</div>
+              <div class="value">{{ exhibition | openinghours | lang: 'dates' }}</div>
+            </li>
+            <li class="admission-fee">
+              <div class="title">{{ 'Admission Fee' | lang }}</div>
+              <div class="value">{{ exhibition.admissionFee | money | lang }}</div>
+            </li>
+            <li class="publications" ng-if="exhibition.links && exhibition.links.length">
+              <div class="title">{{ 'Links to other pages' | lang }}</div>
+              <div class="value" ng-repeat="link in exhibition.links">
+                <a href="{{ link.url | link }}" target="_blank">{{ link.title || link.url }}</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="column column-right">
+        <div class="map">
+          <ui-gmap-google-map control="map.desktopControl" options="map.options" center="map.center" zoom="map.zoom">
+            <ui-gmap-marker options="map.marker.options" icon="map.marker.icon" idKey="desktop-marker" coords="exhibition.venue.address.coordinates" click="menu.map()"></ui-gmap-marker>
+          </ui-gmap-google-map>
+        </div>
+      </div>
+
+    </div>
+    <div class="map">
+      <ui-gmap-google-map control="map.mobileControl" options="map.options" center="map.center" zoom="map.zoom">
+        <ui-gmap-marker options="map.marker.options" icon="map.marker.icon" idKey="mobile-marker" coords="exhibition.venue.address.coordinates"></ui-gmap-marker>
+      </ui-gmap-google-map>
+    </div>
+  </div>
+
+  <div class="guestbook container">
+    <comments data-source="commentSource" data-owners="exhibition.owners">
+      <div class="wrap">
+        <h3>{{ 'Comments' | lang }}</h3>
+        <div class="post">
+          <textarea ng-model="content" placeholder="{{ 'type comment' | lang }}"{{ busy ? ' disabled' : '' }}></textarea>
+          <button ng-click="submit()"{{ busy ? ' disabled' : '' }}><i class="ion-android-exit rotate-90"></i></button>
+        </div>
+        <ul>
+          <li class="comment" ng-repeat="comment in comments track by $index">
+            <div class="head">
+              <a href="{{ artistPage(comment, '#') }}" class="{{ artistPage(comment) ? '' : 'no-link' }}">{{ ownerName(comment) }}</a>
+              <span class="date">{{ comment.created | amDateFormat:'D.M.YYYY' }}</span>
+              <a class="remove ng-cloak" ng-click="remove(comment)" ng-if="canRemove(comment)"><i class="ion-android-cancel"></i></a>
+            </div>
+            <div class="body" ng-bind-html="comment.content | plainToHtml"></div>
+          </li>
+        </ul>
+        <div class="buttons ng-cloak" ng-show="!last">
+          <a class="btn btn-more-comments" ng-click="load()" ng-class="{ disabled: busy }">{{ 'Show more comments' | lang }}</a>
+        </div>
+      </div>
+    </comments>
+  </div>
+
+  <modal class="art-modal" ng-show="modal.id !== null" items="modal.items" index="modal.index" active="modal.id" hm-swipeleft="next()" hm-swiperight="previous()">
+
+    <a class="close" ng-click="close()">
+      <i class="ion-android-close"></i>
+    </a>
+    <div class="wrap">
+      <div class="art" style="background-image: url('{{ ((item.source  || item.photo.source) | thumb:1200) | escape }}')">
+        <a class="nav left" ng-click="previous()">
+          <i class="ion-chevron-left"></i>
+        </a>
+        <a class="nav right" ng-click="next()">
+          <i class="ion-chevron-right"></i>
+        </a>
+        <div class="text">
+          <p class="title">
+            {{ item.title || item.photo.title }}
+          </p>
+          <p class="caption">
+            <span ng-repeat="artist in item.nonUserArtists track by $index">
+              <span>{{ artist.fullname }}</span>
+              <span ng-if="!$last">, </span>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </modal>
+
+  <share ng-show="share.active" active="share.active">
+    <a class="close" ng-click="close()">
+      <i class="ion-android-close"></i>
+    </a>
+    <div class="wrap">
+      <ul class="social">
+        <li class="facebook">
+          <button socialshare socialshare-provider="facebook" socialshare-url="{{ target }}">
+            <i class="ion-social-facebook"></i> Facebook
+          </button>
+        </li>
+        <li class="twitter">
+          <button socialshare socialshare-provider="twitter" socialshare-url="{{ target }}">
+            <i class="ion-social-twitter"></i> Twitter
+          </button>
+        </li>
+        <li class="email">
+          <a href="mailto:?subject=Check%20this%20out&body={{ target }}"><i class="ion-email"></i>Email a Friend</a>
+        </li>
+      </ul>
+    </div>
+
+  </share>
+  <!--
+  <span>{{ time | amDateFormat:'MMMM D, YYYY, hh:mm:ss' }}</span>
+  -->
+</div>

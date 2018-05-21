@@ -1,0 +1,186 @@
+
+> .when {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  background-color: #000;
+  display: none;
+  overflow: auto;
+  font-size: $defaultFontSize;
+
+  &.active {
+    display: block;
+  }
+
+  h2 {
+    margin-top: 30px;
+    clear: both;
+    width: 100%;
+    display: inline-block;
+
+    span.title {
+      text-transform: uppercase;
+      float: left;
+      font-size: 1.35em;
+    }
+    a.cancel {
+      text-transform: uppercase;
+      float: right;
+      font-size: 0.8em;
+    }
+  }
+
+  .days {
+    width: 100%;
+    clear: both;
+    display: inline-block;
+    margin-top: 38px;
+
+    ul {
+      text-align: center;
+
+      li {
+        display: inline-block;
+        margin: 0px 10px 0px 10px;
+
+        @include mobile {
+          margin: 0px 8px 0px 8px;
+
+          &:first-child {
+            margin-left: 0px;
+          }
+          &:last-child {
+            margin-right: 0px;
+          }
+        }
+
+        a {
+          color: #666666;
+          font-size: 1.4em;
+          @include transition(color linear 0.2s);
+        }
+
+        &.active {
+          a {
+            color: #3fa1ed;
+          }
+        }
+      }
+    }
+  }
+
+  .calendars {
+    clear: both;
+    width: 100%;
+    margin-top: 70px;
+  }
+
+  calendar {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 33.33%;
+    padding: 0px 16px 0px 16px;
+    vertical-align: top;
+
+    @include mobile {
+      padding: 0px;
+    }
+
+    table {
+      width: 100%;
+      box-sizing: border-box;
+      vertical-align: top;
+
+      thead {
+        th {
+          color: #808080;
+          font-size: 0.85em;
+          width: 40px;
+          font-weight: bold;
+        }
+        tr.weekdays {
+          border-bottom: 1px #333333 solid;
+
+          th {
+            text-transform: uppercase;
+            text-align: center;
+            padding: 12px 0px 12px 0px;
+          }
+        }
+        tr.month {
+
+          th {
+            text-transform: uppercase;
+            text-align: left;
+            padding: 20px 0px 20px 7px;
+          }
+        }
+      }
+      tbody {
+
+        tr {
+          td {
+            font-size: 1.5em;
+            width: 40px;
+            height: 40px;
+            padding: 6px 0px 6px 0px;
+            box-sizing: border-box;
+
+            a {
+              color: #808080;
+              width: 40px;
+              height: 30px;
+              padding-top: 10px;
+              display: inline-block;
+              text-align: center;
+              border-radius: 50%;
+
+              @include transition(all linear 0.2s);
+            }
+
+            &:first-child {
+
+              a {
+                color: #333333;
+              }
+            }
+
+            &.scheduled {
+              a {
+                background-color: #222222;
+                color: #ffffff;
+              }
+            }
+
+            &.active {
+              a {
+                background-color: #3fa1ed;
+                color: #000000;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    @include mobile {
+      width: 100%;
+
+      &.calendar-1 {
+        display: none;
+      }
+      &.calendar-2 {
+        display: none;
+      }
+    }
+    @include tablet {
+      width: 50%;
+
+      &.calendar-2 {
+        display: none;
+      }
+    }
+  }
+}

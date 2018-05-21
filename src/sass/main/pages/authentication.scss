@@ -1,0 +1,144 @@
+
+.authentication {
+  max-width: 340px;
+  margin: 70px auto 70px auto;
+
+  .icon {
+    width: 100%;
+    display: block;
+    clear: both;
+    margin-bottom: 4px;
+
+    i {
+      font-size: 5em;
+      color: #000000;
+      border-radius: 50% 50% 50% 50%;
+      background: #ffffff;
+      width: 88px;
+      height: 83px;
+      padding-top: 5px;
+      display: block;
+      margin: 0px auto 0px auto;
+      text-align: center;
+
+      @include mobile {
+        width: 80px;
+        height: 74px;
+        padding-top: 6px;
+      }
+    }
+  }
+
+  .form {
+    width: 100%;
+    clear: both;
+
+    h2 {
+      @include transition(all linear 0.2s);
+      cursor: pointer;
+      width: 100%;
+      font-size: 1.5em;
+      font-weight: normal;
+      letter-spacing: 1px;
+      border-bottom: 1px #3e3e3e solid;
+      padding: 20px 0px 20px 0px;
+
+      table {
+        width: 100%;
+
+        td {
+          text-align: center;
+          vertical-align: middle;
+
+          i {
+            @include transition(all linear 0.2s);
+            font-size: 1.25em;
+          }
+        }
+        td.side {
+          width: 72px;
+        }
+      }
+    }
+
+    .submit {
+      display: none;
+
+      .social {
+        margin-top: 0px;
+        clear: both;
+        padding-left: 24px;
+
+        button {
+          background: none;
+          border: 0px none;
+          cursor: pointer;
+          font-size: 1em;
+          padding: 4px 0px 4px 0px;
+          color: #ffffff;
+          vertical-align: middle;
+
+          i {
+            font-size: 1.6em;
+            vertical-align: middle;
+            display: inline-block;
+            text-align: left;
+            width: 26px;
+          }
+        }
+
+        &.first {
+          margin-top: 38px;
+        }
+        &.facebook {
+          i {
+            margin-top: -5px;
+          }
+        }
+      }
+    }
+
+    &.show {
+
+      .submit {
+        display: block;
+      }
+    }
+
+    &.toggled {
+
+      h2 {
+        border-bottom: 0px none;
+        padding-bottom: 0px;
+
+        table {
+
+          i {
+            opacity: 0.01;
+          }
+        }
+      }
+    }
+
+    &.join {
+
+      .social.first {
+        margin-top: 8px;
+      }
+    }
+  }
+
+  .disclaimer {
+    margin-top: 56px;
+    text-align: center;
+    font-size: 1.2em;
+    line-height: 125%;
+
+    p {
+      font-weight: 200;
+    }
+    p.highlight {
+      font-weight: normal;
+    }
+  }
+}

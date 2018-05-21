@@ -1,0 +1,236 @@
+
+section.view > .map {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  background-color: #000;
+  z-index: 1;
+
+  > .close {
+    position: fixed;
+    right: 25px;
+    top: 20px;
+    z-index: 100;
+    font-size: 2.5em;
+  }
+
+  gmap {
+
+    > div {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      left: 0px;
+      top: 0px;
+      z-index: 10;
+    }
+
+    .marker-label {
+      position: absolute;
+      color: #ffffff;
+      font-family: $defaultFontFamily;
+      font-size: 1.3em;
+      text-align: center;
+      font-weight: normal;
+      display: inline-block;
+      width: 600px;
+      height: 20px;
+      margin-top: -65px;
+      text-transform: uppercase;
+
+      &.hide {
+        display: none;
+      }
+    }
+  }
+
+  .preview {
+    position: fixed;
+    left: 0px;
+    width: 100%;
+    height: 250px;
+    top: 100%;
+    background-color: #000000;
+    z-index: 20;
+    @include transition(margin 0.2s linear);
+
+    legend {
+      position: absolute;
+      right: 20px;
+      background-color: #333333;
+      margin-top: -128px;
+      padding: 8px 10px 8px 10px;
+      width: 146px;
+      height: 96px;
+      @include transition(0.2s all linear);
+
+      ul {
+        li {
+          text-transform: uppercase;
+          font-size: 0.75em;
+          vertical-align: middle;
+          margin-top: 12px;
+          @include transition(0.2s all linear);
+
+          &:first-child {
+            margin-top: 0px;
+          }
+
+          img {
+            width: 20px;
+            vertical-align: middle;
+            margin-right: 12px;
+            @include transition(0.2s all linear);
+          }
+        }
+      }
+
+      @include mobile {
+        padding: 8px 8px 8px 8px;
+        margin-top: -124px;
+        height: 90px;
+        width: 126px;
+
+        ul {
+          li {
+            margin-top: 8px;
+
+            img {
+              margin-right: 8px;
+            }
+          }
+        }
+      }
+    }
+
+    &.show {
+      margin-top: -250px;
+
+      @include mobile {
+        margin-top: -150px;  
+      }
+    }
+
+    .wrap {
+      padding: 24px 36px 0px 36px;
+      @include transition(padding 0.2s linear);
+
+      @include mobile {
+        padding: 12px 12px 0px 12px;
+      }
+      @include tablet {
+        padding: 24px 20px 0px 20px;
+      }
+    }
+
+    table {
+      width: 100%;
+
+      td {
+        vertical-align: top;
+      }
+
+      .photo {
+
+        div {
+          width: 80px;
+          height: 80px;
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+        width: 92px;
+      }
+      .info {
+
+        h4 {
+          font-size: 1.1em;
+          text-transform: uppercase;
+          margin-top: 8px;
+
+          .dates {
+            font-size: 0.9em;
+          }
+          .arrows, .locations {
+
+            i {
+              background-color: #3f9ae6;
+              display: inline-block;
+              width: 18px;
+              height: 18px;
+              border-radius: 50%;
+              text-align: center;
+              padding: 2px 1px 1px 3px;
+            }
+
+            a:first-child {
+
+              i {
+                padding: 2px 3px 1px 1px;
+              }
+            }
+          }
+          .locations {
+
+            i {
+              padding: 2px 2px 1px 2px;
+            }
+          }
+        }
+        h5 {
+          margin-top: 6px;
+        }
+        .address {
+          margin-top: 6px;
+
+          i {
+            color: #299cd3;
+            font-size: 1.2em;
+            display: inline-block;
+          }
+
+          .venue {
+            font-family: 'PT Serif';
+            font-weight: 200;
+            font-size: 0.9em;
+            margin-left: 4px;
+            display: inline-block;
+          }
+          .type {
+            display: inline-block;
+            background-color: #3f9ae6;
+            padding: 4px 4px 4px 4px;
+            vertical-align: middle;
+            text-transform: uppercase;
+            font-size: 0.7em;
+            margin-left: 8px;
+            margin-top: -2px;
+            margin-bottom: 4px;
+            width: auto;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    .description {
+      font-family: 'PT Serif';
+      line-height: 160%;
+      font-weight: 200;
+      font-size: 0.9em;
+      margin-top: 18px;
+      height: 106px;
+      overflow: hidden;
+      @include columnCount(3);
+
+      @include mobile {
+        display: none;
+      }
+      @include tablet {
+        @include columnCount(2);
+      }
+    }
+  }
+}

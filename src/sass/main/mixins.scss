@@ -1,0 +1,103 @@
+
+@mixin mobile {
+	@media only screen and (max-width: $mobileMaxWidth) {
+		@content;
+	}
+}
+
+@mixin tablet {
+	@media only screen and (min-width: $tabletMinWidth) and (max-width: $tabletMaxWidth) {
+		@content;
+	}
+}
+
+@mixin desktop {
+	@media only screen and (min-width: $desktopMinWidth) and (max-width: $desktopMaxWidth) {
+		@content;
+	}
+}
+
+@mixin largeDesktop {
+  @media only screen and (min-width: $largeDesktopMinWidth) and (max-width: $largeDesktopMaxWidth) {
+    @content
+  }
+}
+
+@mixin extraLargeDesktop {
+  @media only screen and (min-width: $extraLargeDesktopMinWidth) {
+    @content
+  }
+}
+
+@mixin mobileContainer {
+  @include mobile {
+    margin: 0px auto 0px auto;
+    width: $mobileContainer;
+    clear: both;
+    @content;
+  }
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder { 
+    @content;
+  }
+  &::-moz-placeholder { 
+    @content;
+  }
+  &:-ms-input-placeholder {  
+    @content;
+  }
+}
+
+@mixin columnCount($value) {
+  -webkit-column-count: $value;
+  -moz-column-count: $value;
+  column-count: $value;
+}
+
+@mixin transition($value) {
+  -webkit-transition: $value;
+  -moz-transition: $value;
+  transition: $value;
+}
+
+@mixin rotate($value) {
+  -webkit-transform: rotate($value);
+  -moz-transform: rotate($value);
+  -ms-transform: rotate($value);
+  -o-transform: rotate($value);
+  transform: rotate($value);
+}
+
+@mixin fadeLeft {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&1+0,0+100 */
+  background: -moz-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,1)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
+  background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#00000000',GradientType=1 ); /* IE6-9 */
+}
+
+@mixin fadeRight {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,1+100 */
+  background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
+  background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=1 ); /* IE6-9 */
+}
+
+@mixin userSelect($value) {
+	-webkit-user-select: $value;  // Chrome all / Safari all
+  -moz-user-select: $value;     // Firefox all
+  -ms-user-select: $value;      // IE 10+
+  user-select: $value;
+}

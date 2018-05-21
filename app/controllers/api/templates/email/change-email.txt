@@ -1,0 +1,9 @@
+{{ name }},
+
+You have requested to change your email address. To confirm your new email, please follow the link below:
+
+{{ link }}
+
+If you can't click the link above, copy the url and open it in a new browser tab
+
+Art Advisor Support

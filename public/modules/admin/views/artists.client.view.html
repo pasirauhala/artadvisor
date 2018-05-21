@@ -1,0 +1,21 @@
+<div class="page artists" ng-controller="ArtistsController">
+
+  <div class="artists table-responsive" loading-container="table.settings().$loading">
+    <table ng-table="table" class="table table-striped table-bordered table-hover" show-filter="true">
+      <tr class="artist" ng-repeat="artist in $data">
+      	<td data-title="'ID'">{{ artist._id }}</td>
+        <td data-title="'Name'" filter="{name: 'text'}">
+          {{ artist.name.full }} 
+          <a href="/artist/{{ artist.username }}" target="_blank"><i class="fa fa-external-link"></i></a>
+        </td>
+        <td data-title="'Username'" filter="{username: 'text'}">{{ artist.username }}</td>
+        <td data-title="'Email'">{{ artist.email }}</td>
+        <td data-title="'Website'"><a target="_blank" href="{{ artist.websites[0] }}">{{ artist.websites[0] }}</a></td>
+        <td data-title="'Actions'">
+          <button ng-click="delete(artist)" ng-disabled="updatingArtist || isMe(artist)" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</div>

@@ -1,0 +1,57 @@
+
+/** 
+ * Confirm directive
+ */
+
+confirm {
+  background-color: rgba(0,0,0,0.8);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+  display: none;
+
+  .confirm-wrap {
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    margin: 0px auto 0px auto;
+
+    h3 {
+      font-size: 1.4em;
+    }
+
+    .buttons {
+      margin-top: 12px;
+
+      button {
+        font-size: 1em;
+        border-radius: 4px;
+        background: #fff;
+        border: 0px none;
+        padding: 4px 10px;
+        margin: 0px 4px;
+        cursor: pointer;
+      }
+    }
+
+    ul {
+      margin-top: 12px;
+
+      li {
+        font-size: 1.5em;
+        margin-top: 4px;
+
+        a:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  &.show {
+    display: block;
+  }
+}

@@ -1,0 +1,210 @@
+
+form.default {
+  width: 100%;
+  clear: both;
+
+  .inputs {
+    display: block;
+    padding: 0px 20px 0px 20px;
+    clear: both;
+
+    .input {
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 12px;
+
+      .icon {
+        position: absolute;
+        margin: 10px 0px 0px -36px;
+        color: #666666;
+        font-size: 1.4em;
+        width: 30px;
+        text-align: center;
+
+        @include tablet {
+          margin-left: -32px;
+        }
+        @include mobile {
+          margin-left: -28px;
+        }
+      }
+
+      .wrap {
+        width: 100%;
+        border-radius: 6px;
+        padding: 4px 14px 12px 14px;
+        box-sizing: border-box;
+        background-color: #1a1a1a;
+      }
+
+      h6 {
+        color: #808080;
+        font-weight: normal;
+      }
+
+      input, textarea, span.label, div.tags, div.group {
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #1a1a1a;
+        color: #ffffff;
+        border: 0px none;
+        border-radius: 6px;
+        padding: 8px 14px 8px 14px;
+        font-size: 1em;
+        font-weight: bold;
+
+        @include placeholder {
+          color: #808080;
+        }
+      }
+      span.label {
+        display: inline-block;
+        color: #808080;
+        padding-top: 11px;
+        padding-bottom: 11px;
+        cursor: text;
+      }
+      div.group {
+        display: block;
+        margin-top: 12px;
+
+        &:first-child {
+          margin-top: 0px;
+        }
+
+        &.disabled {
+
+          * {
+            color: #808080 !important;
+          }
+        }
+      }
+      textarea {
+        height: 100px;
+        resize: vertical;
+      }
+
+      .set {
+        font-weight: 200;
+        margin-top: 4px;
+
+        .radio, .checkbox {
+          clear: both;
+          color: #808080;
+
+          label {
+            cursor: pointer;
+
+            i {
+              background-position: left center;
+              width: 32px;
+              display: inline-block;
+              vertical-align: middle;
+            }
+            input {
+              display: none;
+            }
+            span {
+              font-weight: normal;
+            }
+            .hint {
+              clear: both;
+              padding-left: 36px;
+              margin-top: 1px;
+            }
+          }
+
+          &.active {
+            color: #ffffff;
+          }
+
+          &.indent {
+            margin-left: 34px;
+          }
+        }
+      }
+
+      &.genre, &.organization {
+        opacity: 1;
+        @include transition(all linear 0.2s);
+
+        &.ng-hide {
+          opacity: 0;
+        }
+      }
+
+      &.has-set {
+        .icon {
+          margin-top: 2px;
+        }
+      }
+    }
+
+    .datepicker {
+      margin-top: 10px;
+
+      &.ng-hide {
+        display: none;
+      }
+    }
+
+
+  }
+
+  .message {
+    opacity: 1;
+    @include transition(all linear 0.2s);
+
+    &.empty {
+      opacity: 0;
+    }
+    &.success {
+      color: #00cc00;
+    }
+    &.error {
+      color: #cc0000;
+    }
+  }
+
+  div.message {
+    display: none;
+    padding: 10px 0px 0px 4px;
+
+    &.show {
+      display: block;
+    }
+  }
+  
+  .buttons {
+    display: block;
+    padding: 0px 20px 0px 20px;
+    clear: both;
+    margin-top: 4px;
+    overflow: hidden;
+
+    .message, .forgot {
+      margin-top: 10px;
+      margin-left: 4px;
+      font-weight: 200;
+      float: left;
+    }
+
+    button.submit {
+      background: none;
+      border: 0px none;
+      padding: 0px;
+      float: right;
+      cursor: pointer;
+      margin-right: 4px;
+
+      i {
+        font-size: 2.5em;
+        color: #ffffff;
+      }
+
+      &.distance {
+        margin-right: 8px;
+      }
+    }
+  }
+}

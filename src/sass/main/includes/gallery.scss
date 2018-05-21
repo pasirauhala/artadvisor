@@ -1,0 +1,132 @@
+
+.view {
+
+  .container {
+
+    .gallery {
+      cursor: url('https://maps.gstatic.com/mapfiles/openhand_8_8.cur'),move;
+
+      &.drag {
+        cursor: url('https://maps.gstatic.com/mapfiles/closedhand_8_8.cur'),move;
+      }
+    }
+
+    > .gallery {
+
+      background: #1a1a1a;
+      padding: 0px 0px 0px 0px;
+      line-height: 0%;
+      overflow: hidden;
+
+      @include mobile {
+        height: 224px;
+      }
+      @include tablet {
+        height: 258px;
+      }
+
+      .fade {
+        width: 50px;
+        height: 278px;
+        margin-top: -278px;
+        cursor: auto;
+
+        &.left {
+          /* background-image: url('../../images/fade-left.png'); */
+          float: left;
+          display: none;
+          @include fadeLeft;
+        }
+        &.right {
+          /* background-image: url('../../images/fade-right.png'); */
+          float: right;
+          @include fadeRight;
+        }
+
+        @include mobile {
+          height: 238px;
+          margin-top: -238px;
+        }
+        @include tablet {
+          height: 272px;
+          margin-top: -272px;
+        }
+      }
+
+      ul {
+        width: $galleryFullWidth;
+        clear: both;
+        float: left;
+        margin: 7px 0px 7px 0px;
+
+        li {
+          display: inline-block;
+          margin-right: 10px;
+          height: 264px;
+          float: left;
+
+          @include mobile {
+            height: 224px;
+          }
+          @include tablet {
+            height: 258px;
+          }
+
+          img {
+            height: 100%;
+            width: auto;
+            float: left;
+          }
+
+          a.remove-photo {
+            float: left;
+            margin-top: 10px;
+            margin-left: -24px;
+            font-size: 1.3em;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px #222;
+          }
+          a.edit-photo {
+            float: left;
+            margin-top: 10px;
+            margin-left: -50px;
+            font-size: 1.3em;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px #222;
+          }
+
+          &.loading {
+            background-color: #191919;
+            background-image: url('/images/loading.gif');
+            background-position: center center;
+            background-repeat: no-repeat;
+            width: 200px;
+            
+            img {
+              display: none;
+            }
+          }
+
+          &.upload {
+            margin-left: 6px;
+            width: 120px;
+
+            button {
+              font-size: 3em;
+              background: none;
+              border: 0px none;
+              color: #ffffff;
+              padding: 0px;
+              cursor: pointer;
+            }
+          }
+
+          &.upload:first-child {
+            margin-left: 20px;
+          }
+        }
+      }
+
+    }
+  }
+}

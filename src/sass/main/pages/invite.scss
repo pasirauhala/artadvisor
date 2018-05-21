@@ -1,0 +1,53 @@
+
+.view > .invite {
+  margin-top: 42px;
+
+  h1 {
+    text-transform: uppercase;
+    font-size: 1.3em;
+    text-align: center;
+    clear: both;
+    vertical-align: center;
+    padding: 10px 0px 10px 0px;
+
+    i {
+      float: left;
+      font-size: 1.8em;
+      vertical-align: center;
+      margin-top: -10px;
+    }
+  }
+
+  .content {
+
+    .wrap {
+      margin: 100px auto 0px auto;
+      width: 300px;
+
+      p {
+        font-size: 1.1em;
+        font-weight: 200;
+        text-align: center;
+      }
+
+      .inputs {
+        padding: 0px;
+        margin-top: 20px;
+        vertical-align: top;
+
+        input {
+          width: 260px;
+          display: inline-block;
+          vertical-align: top;
+        }
+
+      }
+      .buttons {
+
+        padding-right: 8px;
+        margin-top: 0px;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,155 @@
+<div class="authentication" ng-controller="AuthenticationController">
+
+  <div class="icon">
+    <i class="ion-android-contact"></i>
+  </div>
+
+  <div class="form guest">
+    <h2 ng-click="form.guest.submit()">
+      <table>
+        <tbody>
+          <tr>
+            <td class="side">&nbsp;</td>
+            <td class="center">{{ 'Use as guest' | lang }}</td>
+            <td class="side"><i class="ion-android-exit"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </h2>
+    <form method="post" action="#">
+      <div class="inputs">
+
+      </div>
+    </form>
+  </div>
+
+  <div class="form login">
+    <h2 ng-click="form.login.toggle()">
+      <table>
+        <tbody>
+          <tr>
+            <td class="side">&nbsp;</td>
+            <td class="center">{{ 'Log in' | lang }}</td>
+            <td class="side"><i class="ion-android-exit"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </h2>
+    <div class="submit">
+      <form class="default" ng-submit="form.login.submit()">
+        <div class="inputs">
+          <div class="input email">
+            <input type="email" placeholder="{{ 'e-mail' | lang }}" name="email" ng-model="form.login.input.email" />
+          </div>
+          <div class="input password">
+            <input type="password" placeholder="{{ 'password' | lang }}" name="password" ng-model="form.login.input.password" />
+          </div>
+        </div>
+        <div class="buttons">
+          <a class="forgot" ui-sref="forgot-password({ email: form.login.input.email })">{{ 'Forgot password?' | lang }}</a>
+          <span ng-class="{ empty: !form.login.response.message, success: form.login.response.success, error: !form.login.response.success }" class="message">{{ form.login.response.message | lang }}</span>
+          <button type="submit" class="submit"><i class="ion-android-exit"></i></button>
+        </div>
+      </form>
+      <div class="social facebook first">
+        <form method="post" action="/api/authenticate/facebook?next=/landing">
+          <button type="submit"><i class="ion-social-facebook"></i> {{ 'Log in with Facebook' | lang }}</button>
+        </form>
+      </div>
+      <div class="social google">
+        <form method="post" action="/api/authenticate/google?next=/landing">
+          <button type="submit"><i class="ion-social-googleplus"></i> {{ 'Log in with Google+' | lang }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="form join">
+    <h2 ng-click="form.join.toggle()">
+      <table>
+        <tbody>
+          <tr>
+            <td class="side">&nbsp;</td>
+            <td class="center">{{ 'Join' | lang }}</td>
+            <td class="side"><i class="ion-android-exit"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </h2>
+    <div class="submit">
+      <form class="default" ng-submit="form.join.submit()">
+        <div class="inputs">
+          <div class="input type">
+            <div class="wrap">
+              <h6>{{ 'profile type' | lang }}</h6>
+              <div class="set">
+                <div class="radio" ng-repeat="type in form.join.types track by $index" ng-class="{ active: form.join.typeActive(type.name) }">
+                  <label>
+                    <i class="ion-android-radio-button-{{ form.join.typeActive(type.name) ? 'on': 'off' }}"></i>
+                    <input name="type" type="radio" ng-model="form.join.input.type" ng-checked="form.join.typeActive(type.name)" value="{{ type.name }}" />
+                    <span class="title">{{ type.title | lang }}</span>
+                    <div ng-if="type.hint" class="hint">
+                      ({{ type.hint | lang }})
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="input email">
+            <input type="email" placeholder="{{ 'e-mail' | lang }}" name="email" ng-model="form.join.input.email" />
+          </div>
+          <div class="input password">
+            <input type="password" placeholder="{{ 'password' | lang }}" name="password" ng-model="form.join.input.password" />
+          </div>
+          <div class="input confirm">
+            <input type="password" placeholder="{{ 'password again' | lang }}" name="confirm" ng-model="form.join.input.confirm" />
+          </div>
+          <div ng-show="form.join.typeActive('organizer')" class="input organization">
+            <input type="text" placeholder="{{ 'organization' | lang }}" name="organization" ng-model="form.join.input.organization" />
+          </div>
+          <div class="input first-name">
+            <input type="text" placeholder="{{ 'first name' | lang }}" name="name.first" ng-model="form.join.input.name.first" />
+          </div>
+          <div class="input last-name">
+            <input type="text" placeholder="{{ 'last name' | lang }}" name="name.last" ng-model="form.join.input.name.last" />
+          </div>
+          <div ng-show="form.join.typeActive('artist')" class="input genre">
+            <div class="wrap">
+              <h6>{{ 'your art genre' | lang }}</h6>
+              <div class="set">
+                <div class="checkbox" ng-repeat="genre in form.join.genres track by $index" ng-class="{ active: form.join.genreActive(genre) }">
+                  <label>
+                    <i class="ion-android-checkbox-outline{{ form.join.genreActive(genre) ? '': '-blank' }}"></i>
+                    <input name="genre" type="checkbox" checklist-model="form.join.input.genres" checklist-value="genre" />
+                    <span class="title">{{ genre | lang }}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <span ng-class="{ empty: !form.join.response.message, success: form.join.response.success, error: !form.join.response.success }" class="message">{{ form.join.response.message | lang }}</span>
+          <button type="submit" class="submit"><i class="ion-android-exit"></i></button>
+        </div>
+      </form>
+      <div class="social facebook first">
+        <form method="post" action="/api/authenticate/facebook?next=/landing">
+          <button type="submit"><i class="ion-social-facebook"></i> {{ 'Join with Facebook' | lang }}</button>
+        </form>
+      </div>
+      <div class="social google">
+        <form method="post" action="/api/authenticate/google?next=/landing">
+          <button type="submit"><i class="ion-social-googleplus"></i> {{ 'Join with Google+' | lang }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <p>{{ 'By joining Art Advisor, you agree to our' | lang }}</p>
+    <p class="highlight"><a ui-sref="about-terms">{{ 'Terms of Service and Privacy Policy' | lang }}</a></p>
+  </div>
+
+</div>

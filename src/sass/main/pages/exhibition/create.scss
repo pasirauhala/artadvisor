@@ -1,0 +1,249 @@
+
+.exhibition-create {
+
+  h2 {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.6em;
+    margin-top: 8px;
+
+    photo {
+      margin: -3px 1px 0px 0px;
+      width: 32px;
+      height: 32px;
+      vertical-align: middle;
+
+      i {
+        margin-top: 4px;
+      }
+    }
+  }
+
+  .form {
+    padding: 8px 80px 0px 75px;
+
+    @include tablet {
+      padding: 8px 55px 0px 50px;
+    }
+    @include mobile {
+      padding: 8px 0px 0px 30px;
+    }
+
+    span.label {
+      cursor: pointer !important;
+    }
+
+    .input.max tags-input .tags .input {
+      display: none;
+    }
+
+    .input.artists {
+
+      tags-input {
+
+        &.filled {
+
+          .tags {
+            padding: 2px 14px 4px 14px;
+
+            .input {
+              margin-top: 7px !important;
+            }
+          }
+        }
+      }
+    }
+
+    .input.dates {
+
+      [date-range] {
+        display: none;
+        margin-top: 12px;
+
+        .date-range-wrap {
+          overflow: hidden;
+
+          .date-picker-wrap {
+            display: inline-block;
+            float: left;
+
+            h4 {
+              text-align: center;
+              font-size: 1.2em;
+              padding: 0px 10px 6px 10px;
+            }
+
+            [date-picker] {
+              float: left;
+            }
+          }
+        }
+      }
+    }
+
+    .input.links {
+
+      .links.group {
+        padding: 0px 14px 0px 14px;
+
+        > .title {
+          color: #808080;
+          display: inline-block;
+          width: 120px;
+          vertical-align: top;
+          margin-top: 11px;
+        }
+
+        .links {
+          display: inline-block;
+
+          .link {
+            display: block;
+
+            .title {
+              width: 300px;
+            }
+            .url {
+              width: 300px;
+            }
+
+            input {
+              display: inline-block;
+
+              @include mobile {
+                padding: 4px 0px 4px 0px;
+                width: 168px !important;
+              }
+            }
+
+            &:first-child {
+
+              input {
+                padding-top: 8px;
+              }
+            }
+            &:last-child {
+
+              input {
+                padding-bottom: 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .uploaded {
+
+      .photo {
+        margin: 8px 8px 0px 0px;
+        display: inline-block;
+
+        .icon {
+          position: absolute;
+          margin-left: 0px;
+          margin-top: 6px;
+          font-size: 1.2em;
+          color: #000000;
+          cursor: pointer;
+        }
+
+        img {
+          width: 100%;
+        }
+
+        &.loading {
+
+          .image {
+            background-color: #191919;
+            background-image: url('/images/loading.gif');
+            background-position: center center;
+            background-repeat: no-repeat;
+
+            .icon {
+              display: none;
+            }
+
+            img {
+              display: none;
+            }
+          }
+        }
+      }
+
+      div.photo {
+        display: block;
+        clear: both;
+        margin-right: 0px;
+        width: 100%;
+
+        table {
+          width: 100%;
+
+          td {
+            vertical-align: top;
+          }
+          .image {
+            width: 120px;
+          }
+          .info {
+            padding-left: 8px;
+
+            > input, > tags-input {
+              clear: both;
+              margin-top: 8px;
+            }
+
+            tags-input.max {
+
+              .input {
+                display: none;
+              }
+            }
+
+            *.first {
+              margin-top: 0px;
+            }
+
+            tags-input {
+
+              &.filled {
+
+                .tags {
+                  padding: 2px 14px 4px 14px;
+
+                  .input {
+                    margin-top: 7px !important;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .tag-template, .autocomplete-template {
+
+    photo {
+      vertical-align: middle;
+      width: 30px;
+      height: 30px;
+      margin-right: 6px;
+      margin-bottom: 2px;
+    }
+  }
+  
+  .artists,
+  .photo {
+  	.tags {
+  		.input {
+  			clear: left;
+  		}
+  	}
+  	.tag-item {
+  		clear: left;
+  	}
+  }
+}

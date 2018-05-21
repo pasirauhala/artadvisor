@@ -1,0 +1,217 @@
+
+.exhibition {
+  margin-top: 0px;
+
+  @include mobile {
+    background: none;
+    margin-top: 4px;
+  }
+  @include tablet {
+    background: none;
+  }
+
+  .photos {
+    margin-top: 6px;
+  }
+
+  .information {
+
+    .column {
+
+    }
+
+    .column-left {
+      padding-top: 16px;
+      padding-left: 12px;
+      width: 314px;
+      float: left;
+
+      .date {
+        font-weight: 200;
+        font-size: 0.9em;
+        font-weight: 200;
+      }
+      h2 {
+        text-transform: uppercase;
+        font-weight: normal;
+        font-size: 1.5em;
+        letter-spacing: 1px;
+        margin: 14px 0px 3px 0px;
+
+        a.edit-exhibition {
+          font-size: 0.7em;
+          text-transform: normal;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      h3 {
+        font-weight: 200;
+        
+        .user {
+          font-weight: normal;
+        }
+      }
+      .divider {
+        height: 3px;
+        background: url('../../images/blue-div.png') 3px center no-repeat;
+        margin-top: 16px;
+        margin-bottom: 12px;
+
+        @include mobile {
+          background-position: 1px center;
+        }
+      }
+
+      .location {
+        font-family: 'PT Serif';
+        font-weight: regular;
+        font-size: 0.9em;
+
+        i {
+          color: #2b8dc4;
+          font-size: 1.2em;
+        }
+      }
+
+      .open {
+        font-family: 'PT Serif';
+        font-weight: regular;
+        font-size: 0.9em;
+        margin-top: 4px;
+
+      }
+      .description {
+        font-family: 'PT Serif';
+        font-weight: regular;
+        font-size: 0.9em;
+        line-height: 160%;
+        padding: 24px 0px 24px 0px;
+
+        p {
+          padding: 8px 0px 8px 0px;
+        }
+
+        @include mobile {
+          padding-bottom: 14px;
+        }
+      }
+
+      .others {
+        font-weight: 200;
+
+        ul {
+
+          li {
+            border-top: 1px #818180 solid;
+            margin-top: 10px;
+          }
+          li:first-child {
+            border-top: 0px none;
+          }
+        }
+
+        .title {
+          color: #2b8dc4;
+          text-transform: uppercase;
+          font-size: 0.65em;
+          margin-top: 12px;
+        }
+        .value {
+          font-size: 0.95em;
+          margin-top: 4px;
+        }
+
+        .publications {
+
+          a {
+
+            &:hover {
+              color: #2b8dc4;
+            }
+          }
+        }
+
+      }
+
+      @include mobile {
+        padding-left: 0px;
+        width: 100%;
+      }
+      @include largeDesktop {
+        width: 504px;
+      }
+      @include extraLargeDesktop {
+        width: 604px;
+      }
+    }
+
+    .column-right {
+      padding-top: 14px;
+      float: right;
+
+      .map {
+        /* background: url(../../images/cache-map.png) 0px top no-repeat; */
+        background-color: #000;
+        width: 678px;
+        height: 646px;
+
+        @include mobile {
+          display: none;
+        }
+        @include tablet {
+          width: 305px;
+        }
+        @include largeDesktop {
+          width: 848px;
+        }
+        @include extraLargeDesktop {
+          width: 948px;
+        }
+
+        .angular-google-map-container {
+          width: 100%;
+          height: 646px;
+          background-color: #000 !important;
+        }
+      }
+
+      @include mobile {
+        display: none;
+      }
+    }
+
+    >  .map {
+      display: none;
+
+      @include mobile {
+        /*background: url(../../images/cache-map.png) center center no-repeat;*/
+        background-color: #000;
+        width: 100%;
+        height: 274px;
+        display: block;
+        margin-top: 8px;
+      }
+
+      .angular-google-map-container {
+        width: 100%;
+        height: 274px;
+        background-color: #000 !important;
+      }
+    }
+  }
+
+  .guestbook {
+    margin-top: 50px;
+
+    @include mobile {
+      padding-bottom: 20px;
+      margin-top: 18px;
+    }
+  }
+}
+
+@import 'exhibition/create';
+@import 'exhibition/edit';

@@ -1,0 +1,75 @@
+<div class="landing favorites" ng-controller="FavoritesController">
+
+  <div class="container">
+    <div class="exhibitions ng-cloak" masonry infinite-scroll-disabled="ended" infinite-scroll="loadExhibitions()" infinite-scroll-distance="1" preserve-order load-images="true" ng-if="auth.token">
+      <div class="exhibition masonry-brick" ng-repeat="exhibition in exhibitions track by $index">
+        <div class="wrap">
+          <table>
+            <thead>
+              <tr>
+                <td class="left"><a class="favorite" ng-click="favorite(exhibition)"><i class="{{ 'ion-ios-heart' + (exhibition.favorited ? '' : '-outline') }}"></i></a></td>
+                <td class="center date">
+                  {{ exhibition.date.start | amDateFormat:'DD.MM.YYYY' }} - {{ exhibition.date.end | amDateFormat:'DD.MM.YYYY' }}
+                </td>
+                <td class="right"><a class="recommend" ng-click="recommend(exhibition)"><i class="{{ 'ion-ios-star' + (exhibition.recommended ? '' : '-outline') }}"></i></a></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name" colspan="3">
+                  <a ui-sref="exhibition({ permalink: exhibition.permalink })">
+                    <h3>{{ exhibition.name }}</h3>
+                  </a>
+                </td>
+              </tr>
+              <tr ng-repeat="artist in exhibition.artists track by $index">
+                <td class="artist" colspan="3">
+                  <h4>{{ artist }}</h4>
+                </td>
+              </tr>
+              <tr>
+                <td class="divider" colspan="3">
+                  <img ng-src="{{ root + '/images/blue-div.png' }}" />
+                </td>
+              </tr>
+              <tr>
+                <td class="venue" colspan="3">
+                  <a href="#"><i class="fa fa-map-marker"></i></a>
+                  <!-- <span>{{ exhibition.address.full }} ({{ exhibition.address.coordinates | distance }})</span> -->
+                  <span>{{ exhibition.venue.name + ' (' + (exhibition.venue.address.city | lang:'':exhibition.venue.address.lang) + ')' }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="open" colspan="3">
+                  {{ exhibition | openstatus | lang: 'open' }}
+                </td>
+              </tr>
+              <tr>
+                <td class="art" colspan="3" ng-style="{ height: brickHeight(exhibition.image) }">
+                  <a ui-sref="exhibition({ permalink: exhibition.permalink })">
+                    <img ng-src="{{ exhibition.image.medium | thumb:400 }}" />
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <h4 data-ng-if="ended && !exhibitions.length">{{ 'No events' | lang }}</h4>
+    <div class="not-logged-in ng-cloak" ng-if="!auth.token">
+      <h4>{{ 'Sign In' | lang }}</h4>
+      <h5>{{ 'and curate your own art scene' | lang }}</h5>
+      <a ui-sref="authentication({ action: 'login' })"><i class="ion-android-exit"></i></a>
+    </div>
+  </div>
+
+  <!--
+  <td class="art" colspan="3" style="height: {{ brickHeight(exhibition.image); }}px;">
+    <a ui-sref="exhibition({ permalink: exhibition.permalink })">
+      <img ng-src="{{ exhibition.image.medium }}" />
+    </a>
+  </td>
+  -->
+
+</div>

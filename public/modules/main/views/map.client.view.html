@@ -1,0 +1,87 @@
+<div class="map" ng-controller="MapController">
+
+  <a class="close" ng-click="close()"><i class="ion-android-close"></i></a>
+  <gmap options="map.options" latitude="map.latitude" longitude="map.longitude" zoom="map.zoom" responsive="true" init="map.init" loaded="map.loaded" change="map.change"></gmap>
+
+  <div class="preview">
+    <legend>
+      <ul>
+        <li><img ng-src="{{ root + '/images/marker-open-active.png' }}" /> {{ 'Now Open' | lang }}</li>
+        <li><img ng-src="{{ root + '/images/marker-closed-active.png' }}" /> {{ 'Now Closed' | lang }}</li>
+        <li><img ng-src="{{ root + '/images/marker-special-active.png' }}" /> {{ 'Special Time' | lang }}</li>
+      </ul>
+    </legend>
+    <div class="wrap">
+      <table ng-if="preview.focusVenue">
+        <tr>
+          <td class="photo" ng-show="preview.photo">
+            <a ui-sref="venue({ permalink: preview.venue.permalink })">
+              <div style="background-image: url('{{ (preview.photo.source | thumb:'80x80') | escape }}')" /></div>
+            </a>
+          </td>
+          <td class="info">
+            <h4>
+              <a ui-sref="venue({ permalink: preview.venue.permalink })">{{ preview.venue.name }}</a>
+
+              <span class="arrows" ng-if="preview.count > 1">
+                <a ng-click="preview.prev()"><i class="ion-ios-arrow-back"></i></a>
+                <a ng-click="preview.next()"><i class="ion-ios-arrow-forward"></i></a>
+              </span>
+
+              <span class="locations">
+                <a ng-click="preview.locate()"><i class="ion-navigate"></i></a>
+                <a ng-click="preview.directions()"><i class="ion-android-compass"></i></a>
+              </span>
+
+            </h4>
+            <div class="address">
+              <i class="ion-ios-location"></i> 
+              <span class="venue"><a ui-sref="venue({ permalink: preview.venue.permalink })">{{ preview.venue.address.full }} ({{ preview.distance() }})</a></span>
+              <span class="type" ng-repeat="venueType in preview.venue.venueTypes">
+                {{ venueType | lang }}
+              </span>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <table ng-if="!preview.focusVenue">
+        <tr>
+          <td class="photo" ng-show="preview.photo">
+            <a ui-sref="exhibition({ permalink: preview.permalink })">
+              <div style="background-image: url('{{ (preview.photo | thumb:'80x80') | escape }}')" /></div>
+            </a>
+          </td>
+          <td class="info">
+            <h4>
+              <a ui-sref="exhibition({ permalink: preview.permalink })">{{ preview.name }}</a>
+              <span class="dates">{{ preview.start | amDateFormat:'D.M.YYYY' }} - {{ preview.end | amDateFormat:'D.M.YYYY' }}</span>
+
+              <span class="arrows" ng-if="preview.count > 1">
+                <a ng-click="preview.prev()"><i class="ion-ios-arrow-back"></i></a>
+                <a ng-click="preview.next()"><i class="ion-ios-arrow-forward"></i></a>
+              </span>
+
+              <span class="locations">
+                <a ng-click="preview.locate()"><i class="ion-navigate"></i></a>
+                <a ng-click="preview.directions()"><i class="ion-android-compass"></i></a>
+              </span>
+
+            </h4>
+            <h5>{{ preview.artists }}</h5>
+            <div class="address">
+              <i class="ion-ios-location"></i> 
+              <span class="venue"><a ui-sref="venue({ permalink: preview.venuePermalink })">{{ preview.venue }} ({{ preview.distance() }})</a></span>
+              <span class="type" ng-repeat="venueType in preview.venueTypes">
+                {{ venueType | lang }}
+              </span>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div class="description">
+        {{ preview.description }}
+      </div>
+    </div>
+  </div>
+
+</div>

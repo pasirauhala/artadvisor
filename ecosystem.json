@@ -1,0 +1,44 @@
+{
+  "apps" : [{
+    "name"      : "artadvisor",
+    "script"    : "server.js",
+    "env_production" : {
+      "NODE_ENV": "production",
+      "PORT": 8000
+    },
+    "env_development" : {
+      "NODE_ENV": "development",
+      "PORT": 8001
+    },
+    "env_test" : {
+      "NODE_ENV": "test",
+      "PORT": 8002
+    }
+  }],
+  "deploy" : {
+    "production" : {
+      "user" : "root",
+      "host" : "185.26.51.44",
+      "repo" : "git@github.com:LuxusInc/art-advisor.git",
+      "ref"  : "origin/master",
+      "path" : "/root/artadvisor-production",
+      "post-deploy": "npm install --production && pm2 startOrRestart ecosystem.json --env production && service apache2 restart"
+    },
+    "development" : {
+      "user" : "root",
+      "host" : "185.26.51.44",
+      "repo" : "git@github.com:LuxusInc/art-advisor.git",
+      "ref"  : "origin/master",
+      "path" : "/root/artadvisor-development",
+      "post-deploy": "npm install && pm2 startOrRestart ecosystem.json --env development && service apache2 restart"
+    },
+    "test" : {
+      "user" : "root",
+      "host" : "185.26.51.44",
+      "repo" : "git@github.com:LuxusInc/art-advisor.git",
+      "ref"  : "origin/test",
+      "path" : "/root/artadvisor-test",
+      "post-deploy": "npm install && pm2 startOrRestart ecosystem.json --env test && service apache2 restart"
+    }
+  }
+}

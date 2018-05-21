@@ -1,0 +1,200 @@
+<div class="search" ng-controller="SearchController">
+
+  <div class="main">
+    <div class="container">
+
+      <h2>
+        <a class="back" ng-click="main.back()"><i class="ion-android-close"></i></a>
+        <a ng-if="false" class="settings" ng-click="main.settings()"><i class="ion-ios-gear"></i></a>
+
+        <div class="input">
+          <label>
+            <i class="ion-ios-search-strong magnifying-glass"></i>
+            <input type="text" ng-model="search.q" name="q" placeholder="search keyword" />
+            <i class="ion-close-circled reset" ng-class="{ show: search.q }" ng-click="search.q = ''"></i>
+          </label>
+        </div>
+
+        <ul class="actions">
+          <li class="when">
+            <span>{{ 'When?' | lang }}</span>
+            <a ng-click="when.active = true">
+              {{ when.date | amDateFormat: 'DD MMM' }} <i class="ion-chevron-down"></i>
+            </a>
+          </li>
+          <li class="where">
+            <span>{{ 'Where?' | lang }}</span>
+            <a ng-click="where.active = true">
+              <span>{{ where.city | lang }}</span>
+              <i class="ion-chevron-down"></i>
+            </a>
+          </li>
+          <li class="save">
+            <a ng-click="save.active = true">
+              {{ 'Saved' | lang }} <i class="fa fa-check"></i>
+            </a>
+          </li>
+        </ul>
+      </h2>
+
+      <div class="searches" ng-hide="search.q || search.forced || search.byCity">
+        <div class="col previous">
+          <h5>{{ 'Your previous saved searches' | lang }}</h5>
+          <ul>
+            <li ng-repeat="s in save.searches">
+              <a ng-click="save.remove(s.id)">
+                <i class="ion-ios-minus-outline"></i>
+              </a>
+              <span ng-click="save.select(s)">{{ s.name }}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="col suggestions">
+          <div class="wrap">
+            <h5>{{ 'Top Search' | lang }}</h5>
+            <ul>
+              <li ng-repeat="keyword in search.suggestions">
+                <a ng-click="search.q = keyword">
+                  <span>{{ keyword }}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="results" ng-show="search.q || search.forced || search.byCity">
+        <div class="results-wrap">
+          <div class="result" ng-repeat="type in search.results" ng-show="type.count > 0">
+            <h4>{{ type.title | lang }}</h4>
+            <ul>
+              <li ng-repeat="result in type.data">
+                <a ui-sref="{{ type.name }}({ {{ result.permalink ? 'permalink' : 'username' }}: '{{ result.permalink || result.username }}' })">
+                  <photo ng-if="type.name == 'artist'" user="result">
+                    <i class="ion-android-contact"></i>
+                  </photo>
+                  <span>{{ result.name.full || result.name }}</span>
+                  <span ng-if="type.name == 'artist'">({{ result.username }})</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col previous">
+          <h5>{{ 'Your previous saved searches' | lang }}</h5>
+          <ul>
+            <li ng-repeat="s in save.searches">
+              <a ng-click="save.remove(s.id)">
+                <i class="ion-ios-minus-outline"></i>
+              </a>
+              <span ng-click="save.select(s)">{{ s.name }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="when" ng-class="{ active: when.active }">
+    <div class="container">
+      <h2>
+        <span class="title">{{ 'When?' | lang }}</span>
+        <a class="cancel" ng-click="when.active = false">{{ 'Cancel' | lang }}</a>
+      </h2>
+      <div class="days">
+        <ul>
+          <li ng-class="{ active: when.activeDay(day.date) }" ng-repeat="day in when.days"><a ng-click="when.pick(day.date)">{{ day.title | lang }}</a></li>
+        </ul>
+      </div>
+      <div class="calendars">
+        <calendar class="calendar-{{ $index }}" ng-show="calendar.show" date="when.date" month="{{ calendar.month }}" start-of-week="monday" ng-repeat="calendar in when.calendars track by $index">
+          <table>
+            <thead>
+              <tr class="weekdays">
+                <th ng-repeat="day in weekdays">{{ day | amDateFormat: 'ddd' | lang }}</th>
+              </tr>
+              <tr class="month">
+                <th colspan="7">
+                  {{ month | amDateFormat: 'MMMM' | lang }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="week in weeks track by $index">
+                <td ng-repeat="day in week track by $index" ng-class="{ active: isActive(day), scheduled: parent.when.hasSchedule(day) }">
+                  <a ng-if="day" ng-click="parent.when.pick(day)">{{ day | amDateFormat: 'D' }}</a>
+                  <span ng-if="!day">&nbsp;</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </calendar>
+      </div>
+    </div>
+  </div>
+
+  <div class="where" ng-class="{ active: where.active }">
+    <div class="container">
+      <h2>
+        <span class="title">{{ 'Where?' | lang }}</span>
+        <a class="cancel" ng-click="where.active = false">{{ 'Cancel' | lang }}</a>
+        <div class="input">
+          <label>
+            <i class="ion-ios-search-strong"></i>
+            <input type="text" ng-model="where.q" name="q" placeholder="{{ 'search a city' | lang }}" />
+          </label>
+        </div>
+      </h2>
+
+      <div class="results">
+        <div class="result">
+          <h4>{{ 'Current City' | lang }}</h4>
+          <ul>
+            <li class="active">
+              <a>{{ where.city | lang }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="result" ng-show="where.cities.length">
+          <h4>{{ 'Cities' | lang }}</h4>
+          <ul>
+            <li ng-repeat="city in where.cities">
+              <a ng-click="where.setActive(city)">{{ city | lang }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="save" ng-class="{ active: save.active }">
+    <div class="container">
+
+      <h2>
+        <a class="back" ng-click="save.active = false"><i class="ion-android-close"></i></a>
+
+        <div class="input">
+          <input type="text" ng-model="save.name" name="name" placeholder="Name Your Search" />
+          <button class="submit" ng-click="save.submit()"><i class="ion-android-exit rotate-90"></i></button>
+        </div>
+      </h2>
+
+      <div class="searches">
+        <h3>{{ 'Saved Searches' | lang }}</h3>
+        <h4>{{ 'Your previous saved searches' | lang }}</h4>
+        <ul>
+          <li ng-repeat="s in save.searches">  
+            <a ng-click="save.remove(s.id)">
+              <i class="ion-ios-minus-outline"></i>
+            </a>
+            <span ng-click="save.select(s)">{{ s.name }}</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,20 @@
+{
+  "apps" : [{
+    "name"      : "artadvisor-development",
+    "script"    : "server.js",
+    "env_development" : {
+      "NODE_ENV": "development",
+      "PORT": 8001
+    }
+  }],
+  "deploy" : {
+    "development" : {
+      "user" : "root",
+      "host" : "185.26.51.44",
+      "repo" : "git@github.com:CodersForHire/art-advisor.git",
+      "ref"  : "origin/master",
+      "path" : "/root/artadvisor-development",
+      "post-deploy": "npm install && pm2 startOrRestart development.json --env development && service apache2 restart"
+    }
+  }
+}

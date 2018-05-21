@@ -1,0 +1,59 @@
+
+.content > .menu {
+
+	display: none;
+	padding: 0 15px;
+	box-sizing: border-box;
+	overflow: visible;
+
+	.main, .landing .text {
+
+		ul {
+			list-style-type: none;
+			display: inline;
+
+			li {
+				display: inline;
+				font-size: 1.6em;
+			}
+		}
+	}
+
+	@import 'menu/main';
+	@import 'menu/landing';
+	@import 'menu/mobile';
+	@import 'menu/authenticated';
+}
+
+@import 'menu/user';
+
+body {
+
+	&.en {
+
+	}
+
+	&.fi {
+
+		.content .menu .landing .menu-list {
+
+			.item {
+
+				&.landing-artview {
+
+					a {
+						font-size: 3em;
+					}
+				}
+			}
+		}
+	}
+
+	&.se {
+
+	}
+
+	&.de {
+
+	}
+}

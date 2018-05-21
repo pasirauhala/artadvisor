@@ -1,0 +1,51 @@
+
+.view > .privacy-policy {
+  margin-top: 42px;
+
+  h1 {
+    text-transform: uppercase;
+    font-size: 1.3em;
+    text-align: center;
+    clear: both;
+    vertical-align: center;
+    padding: 10px 0px 10px 0px;
+
+    i {
+      float: left;
+      font-size: 1.8em;
+      vertical-align: center;
+      margin-top: -10px;
+    }
+  }
+
+  .content {
+    font-size: 1.2em;
+    margin-top: 40px;
+    line-height: 130%;
+    @include columnCount(3);
+
+    h2 {
+      font-size: 1.2em;
+    }
+    h4 {
+      font-size: 0.9em;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    @include mobile {
+      @include columnCount(1);
+
+      p {
+        margin-top: 16px;
+        line-height: 120%;
+      }
+    }
+    @include tablet {
+      @include columnCount(2);
+    }
+  }
+
+}

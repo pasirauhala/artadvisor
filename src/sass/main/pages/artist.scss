@@ -1,0 +1,362 @@
+
+.artist {
+  margin-top: 0px;
+
+  @include mobile {
+    background: none;
+    margin-top: 4px;
+  }
+  @include tablet {
+    background: none;
+  }
+
+  .photos {
+    margin-top: 6px;
+  }
+
+  .photos-warning {
+    color: #ff0000;
+    font-size: 1.2em;
+    padding: 16px 0px;
+  }
+
+  .information {
+
+    .container {
+
+      @include mobile {
+        width: 100%;
+      }
+    }
+
+    .column {
+
+    }
+
+    .column-left {
+      padding-top: 16px;
+      padding-left: 12px;
+      width: 314px;
+      float: left;
+
+      @include mobileContainer {
+        padding-left: 0px;
+        float: none;
+      }
+      @include largeDesktop {
+        width: 504px;
+      }
+      @include extraLargeDesktop {
+        width: 604px;
+      }
+
+      .date {
+        font-weight: 200;
+        font-size: 0.9em;
+        font-weight: 200;
+      }
+      h2 {
+        text-transform: uppercase;
+        font-weight: normal;
+        font-size: 1.5em;
+        letter-spacing: 1px;
+        margin: 8px 0px 3px 0px;
+        vertical-align: middle;
+
+        table {
+          width: 100%;
+
+          td {
+            vertical-align: middle;
+          }
+
+          td.the-photo {
+            width: 60px;
+          }
+        }
+
+        photo {
+          width: 60px;
+          height: 60px;
+          vertical-align: middle;
+          margin: 0px 8px 0px -10px;
+
+          i {
+            margin-top: 8px;
+            font-size: 1.8em;
+          }
+        }
+
+        span {
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        a.edit-profile {
+          font-size: 0.7em;
+          text-transform: normal;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      h3 {
+        font-weight: normal;
+      }
+      .divider {
+        height: 3px;
+        background: url('../../images/blue-div.png') 3px center no-repeat;
+        margin-top: 16px;
+        margin-bottom: 12px;
+
+        @include mobile {
+          background-position: 1px center;
+        }
+      }
+
+      .description {
+        font-family: 'PT Serif';
+        font-weight: regular;
+        font-size: 0.9em;
+        line-height: 160%;
+        padding: 0px 0px 24px 0px;
+
+        p {
+          padding: 8px 0px 8px 0px;
+        }
+
+        @include mobile {
+          padding-bottom: 14px;
+        }
+      }
+
+      .others {
+        font-weight: 200;
+
+        ul {
+
+          li {
+            border-top: 1px #818180 solid;
+            margin-top: 10px;
+          }
+          li:first-child {
+            border-top: 0px none;
+          }
+        }
+
+        .title {
+          color: #2b8dc4;
+          text-transform: uppercase;
+          font-size: 0.65em;
+          margin-top: 12px;
+        }
+        .value {
+          font-size: 0.95em;
+          margin-top: 4px;
+        }
+      }
+    }
+
+    .column-right {
+      padding-top: 14px;
+      float: right;
+      width: 714px;
+
+      @include mobile {
+        clear: both;
+        width: 100%;
+      }
+      @include tablet {
+        width: 330px;
+      }
+      @include largeDesktop {
+        width: 848px;
+      }
+      @include extraLargeDesktop {
+        width: 948px;
+      }
+
+      h3 {
+        text-transform: uppercase;
+        font-size: 1em;
+        margin-top: 11px;
+        
+        @include mobileContainer;
+      }
+
+      .exhibition {
+        margin-top: 24px;
+        opacity: 1;
+        @include transition(all linear 0.2s);
+
+        &.ng-hide {
+          opacity: 0;
+        }
+
+        h4 {
+          text-transform: uppercase;
+          font-weight: 200;
+        
+          @include mobileContainer;
+        }
+
+        h5 {
+          font-family: 'PT Serif';
+          font-weight: regular;
+          font-size: 0.9em;
+          color: #299ad1;
+          margin-top: 6px;
+        
+          @include mobileContainer {
+            margin-top: 4px;
+          }
+        }
+
+        .gallery {
+          background: #191919;
+          height: 100px;
+          overflow: hidden;
+          width: 100%;
+          clear: both;
+          padding: 6px 0px 6px 0px;
+          margin-top: 4px;
+
+          @include mobile {
+            height: 100px;
+          }
+          @include tablet {
+            height: 100px;
+          }
+
+          ul {
+            width: $galleryFullWidth;
+            margin-left: 0px;
+
+            li {
+              display: inline-block;
+              margin-right: 10px;
+              height: 100px;
+
+              @include mobile {
+                height: 100px;
+              }
+              @include tablet {
+                height: 100px;
+              }
+
+              img {
+                height: 100%;
+                width: auto;
+              }
+            }
+          }
+        }
+      }
+      .exhibition.hide {
+        display: none;
+      }
+
+      .buttons {
+        clear: both;
+        margin-top: 24px;
+        margin-bottom: 4px;
+
+        @include mobileContainer {
+          margin-top: 26px;
+        }
+
+        .btn.btn-past-exhibitions {
+          font-family: 'PT Serif';
+          font-weight: regular;
+          font-style: italic;
+          font-size: 0.9em;
+          letter-spacing: 1px;
+          color: #ffffff;
+          border: 1px #696968 solid;
+          padding: 9px 16px 9px 16px;
+          float: left;
+        }
+      }
+    }
+  }
+
+  .map {
+    margin-top: 36px;
+    width: 100%;
+    clear: both;
+    height: 320px;
+    background: url('../../images/large-map.png') center center repeat;
+  }
+
+  .edit-photo-modal {
+    position: fixed;
+    z-index: 10000;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    background-color: rgba(0,0,0,0.9);
+
+    .close {
+      margin: 24px 0px 0px 24px;
+      cursor: pointer;
+      position: absolute;
+      z-index: 10000;
+
+      i {
+        font-size: 2em;
+      }
+    }
+
+    .edit-photo-modal-wrap {
+      width: 100%;
+      max-width: 420px;
+      margin: 100px auto;
+      text-align: center;
+
+      .the-image {
+        max-height: 200px;
+        max-width: 380px;
+      }
+
+      .input.artists {
+        text-align: left;
+
+        tags-input {
+
+          &.filled {
+
+            .tags {
+              padding: 2px 14px 4px 14px;
+
+              .input {
+                margin-top: 7px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .tag-template {
+
+    photo {
+      vertical-align: middle;
+      width: 30px;
+      height: 30px;
+      margin-right: 6px;
+      margin-bottom: 2px;
+    }
+  }
+}
+
+.feedback {
+  margin-top: 50px;
+
+  @include mobile {
+    padding-bottom: 20px;
+    margin-top: 18px;
+  }
+}

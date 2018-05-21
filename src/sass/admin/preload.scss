@@ -1,0 +1,17 @@
+
+/**
+ * Preload fonts
+ */
+ 
+.fontAwesome {
+  font-family: 'FontAwesome';
+}
+.glyphicons {
+  font-family: 'Glyphicons Halflings';
+}
+
+body > .preload {
+  height: 1px;
+  visibility: hidden;
+  overflow: hidden;
+}

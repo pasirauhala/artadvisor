@@ -1,0 +1,192 @@
+<div class="profile" ng-controller="ProfileController">
+
+  <div class="container">
+    <a ui-sref="artist({ username: user.username })" ng-if="user.profileType == 'artist'">
+      <photo>
+        <i class="ion-android-contact"></i>
+      </photo>
+      <h2 class="name">{{ user.name.full }} ({{ user.username }})</h2>
+      <h6><i class="ion-person"></i> Visit Public Profile</h6>
+    </a>
+    <div ng-if="user.profileType != 'artist'">
+      <photo>
+        <i class="ion-android-contact"></i>
+      </photo>
+      <h2 class="name">{{ user.name.full }} ({{ user.username }})</h2>
+    </div>
+
+    <div class="manage" ng-if="user.profileType != 'artlover'">
+      <ul class="menu">
+        <li ng-repeat="name in manage.names track by $index" ng-class="{ active: (manage.active == name) }">
+          <a ng-click="showManaged.activate(name)">{{ manage.getTitle(name) | lang }}</a>
+        </li>
+      </ul>
+      <!-- Events -->
+      <ul class="exhibitions" ng-show="manage.active == 'exhibitions'">
+        <li ng-repeat="exhibition in user.exhibitions track by $index" style="background-image: url('{{ ((root + exhibition.gallery.photos[0].photo.source) | thumb:1200) | escape }}')" ng-show="$index < showManaged.exhibitions">
+          <div class="exhibition">
+            <div class="date">
+              {{ exhibition.startDate | amDateFormat:'D.M.YYYY' }} - {{ exhibition.endDate | amDateFormat:'D.M.YYYY' }}
+            </div>
+            <h4><a ui-sref="exhibition({ permalink: exhibition.permalink })">{{ exhibition.name }}</a></h4>
+            <ul class="artists">
+              <li ng-repeat="artist in exhibition.artists track by $index">{{ artist.name.full }}</li>
+            </ul>
+            <div class="actions">
+              <a class="edit" ui-sref="exhibition-edit({ permalink: exhibition.permalink })">{{ 'Edit event' | lang }}</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Venues -->
+      <ul class="venues" ng-show="manage.active == 'venues'">
+        <li ng-repeat="venue in user.venues track by $index" style="background-image: url('{{ ((root + venue.album.photos[0].source) | thumb:1200) | escape }}')" ng-show="$index < showManaged.venues">
+          <div class="venue">
+            <table>
+              <tbody>
+                <tr>
+                  <td class="side">&nbsp;</td>
+                  <td>
+                    <h4><a ui-sref="venue({ permalink: venue.permalink })">{{ venue.name }}</a></h4>
+                  </td>
+                  <td class="side">&nbsp;</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="actions">
+              <a class="edit" ui-sref="venue-edit({ permalink: venue.permalink })">{{ 'Edit venue' | lang }}</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="actions">
+        <a class="create" ng-click="manage.createNew()">+ {{ ('Create new ' + manage.getName(manage.active)) | lang }}</a>
+        <a class="more ng-cloak" ng-show="showManaged.hasMore()" ng-click="showManaged.more()">{{ ('Show more ' + manage.getName(manage.active) + 's') | lang }}</a>
+      </div>
+    </div>
+
+    <div class="favorites">
+      <h3>{{ 'Favourites' | lang }}</h3>
+      <ul class="menu">
+        <li ng-repeat="name in favorites.names track by $index" ng-class="{ active: (favorites.active == name) }">
+          <a ng-click="show.activate(name)">{{ favorites.getName(name) | lang }}</a>
+        </li>
+      </ul>
+      <!-- Events -->
+      <ul class="exhibitions" ng-show="favorites.active == 'exhibitions'">
+        <li ng-repeat="favorite in user.favorites.exhibitions track by $index" style="background-image: url('{{ ((root + favorite.gallery.photos[0].photo.source) | thumb:1200) | escape }}')" ng-show="$index < show.exhibitions">
+          <div class="exhibition">
+            <div class="date">
+              {{ favorite.startDate | amDateFormat:'D.M.YYYY' }} - {{ favorite.endDate | amDateFormat:'D.M.YYYY' }}
+            </div>
+            <h4>
+              <table>
+                <tbody>
+                  <tr>
+                    <td class="side">
+                      <a class="unfavorite" ng-click="exhibition.unfavorite(favorite)">
+                        <i class="ion-ios-heart"></i>
+                      </a>
+                    </td>
+                    <td class="name">
+                      <a ui-sref="exhibition({ permalink: favorite.permalink })">
+                        <span>{{ favorite.name }}</span>
+                      </a>
+                    </td>
+                    <td class="side">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </h4>
+            <ul class="artists">
+              <li ng-repeat="artist in favorite.artists track by $index">{{ artist.name.full }}</li>
+            </ul>
+            <!--
+            <div class="actions">
+              <a class="edit" ui-sref="exhibition({ permalink: favorite.permalink })">Edit event</a>
+            </div>
+            -->
+          </div>
+        </li>
+      </ul>
+      <!-- Artists -->
+      <ul class="artists" ng-show="favorites.active == 'artists'">
+        <li ng-repeat="favorite in user.favorites.artists track by $index">
+          <a ui-sref="artist({ username: favorite.username })">
+            <photo user="favorite">
+              <i class="ion-android-contact"></i>
+            </photo>
+            <div class="name">
+              <div class="first">{{ favorite.name.first }}</div>
+              <div class="last">{{ favorite.name.last }}</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+      <!-- Venues -->
+      <ul class="venues" ng-show="favorites.active == 'venues'">
+        <li ng-repeat="favorite in user.favorites.venues track by $index" style="background-image: url('{{ ((root + favorite.album.photos[0].source) | thumb:1200) | escape }}')" ng-show="$index < show.venues">
+            <div class="venue">
+              <table>
+                <tbody>
+                  <tr>
+                    <td class="side">
+                      <a class="unfavorite" ng-click="venue.unfavorite(favorite)">
+                        <i class="ion-ios-heart"></i>
+                      </a>
+                    </td>
+                    <td>
+                      <h4><a ui-sref="venue({ permalink: favorite.permalink })">{{ favorite.name }}</a></h4>
+                    </td>
+                    <td class="side">&nbsp;</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </li>
+      </ul>
+
+      <div class="actions">
+        <a class="more ng-cloak" ng-show="show.hasMore()" ng-click="show.more()">{{ ('Show ' + (show.showingInactive ? 'past events' : 'more favorites')) | lang }}</a>
+      </div>
+    </div>
+
+    <div class="artcache">
+      <h3>{{ 'Additional Content' | lang }}</h3>
+      <!-- Events -->
+      <ul class="exhibitions">
+        <li ng-repeat="ac in artCache track by $index" style="background-image: url('{{ ((root + ac.gallery.photos[0].photo.source) | thumb:1200) | escape }}')" ng-show="$index < show.exhibitions" ng-class="{ disabled: hiddenArtCache(ac) }">
+          <div class="exhibition">
+            <h4>
+              <table>
+                <tbody>
+                  <tr>
+                    <td class="side">
+                      <a class="unfavorite" ng-click="toggleArtCache(ac)">
+                        <i ng-class="{ 'ion-android-checkbox-outline': !hiddenArtCache(ac), 'ion-android-checkbox-outline-blank': hiddenArtCache(ac) }"></i>
+                      </a>
+                    </td>
+                    <td class="name">
+                      <a>
+                        <span>{{ ac.name }}</span>
+                      </a>
+                    </td>
+                    <td class="side">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </h4>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>

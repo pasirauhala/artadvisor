@@ -1,0 +1,62 @@
+<div class="landing artview" ng-controller="ArtViewController">
+
+  <div class="container">
+    <div id="preview" class="preview" style="background-image: url('{{ ((root + preview.art.photo.photo.source) | thumb:'0x600') | escape }}')">
+      <div class="text">
+        <p class="title">
+          <a ui-sref="exhibition({ permalink: preview.art.exhibition.permalink })">{{ preview.art.exhibition.name }}</a>
+        </p>
+        <p class="caption">
+          <span ng-repeat="artist in preview.art.photo.nonUserArtists track by $index">
+            <span>{{ artist.fullname }}</span>
+            <span ng-if="!$last">, </span>
+          </span>
+        </p>
+        <p class="exhibition">
+          <a ui-sref="venue({ permalink: preview.art.exhibition.venue.permalink })">{{ preview.art.exhibition.venue.name }}</a>
+        </p>
+      </div>
+    </div>
+
+    <div id="modal" ng-class="{ show: modal.show }" hm-swipeleft="preview.next()" hm-swiperight="preview.previous()">
+      <a class="close" ng-click="modal.close()">
+        <i class="ion-android-close"></i>
+      </a>
+      <div class="wrap">
+        <div class="art" style="background-image: url('{{ ((root + preview.art.photo.photo.source) | thumb:1200) | escape }}')">
+          <a class="nav left" ng-click="preview.previous()">
+            <i class="ion-chevron-left"></i>
+          </a>
+          <a class="nav right" ng-click="preview.next()">
+            <i class="ion-chevron-right"></i>
+          </a>
+          <div class="text">
+            <p class="title">
+              <a ui-sref="exhibition({ permalink: preview.art.exhibition.permalink })">{{ preview.art.exhibition.name }}</a>
+            </p>
+            <p class="caption">
+              <span ng-repeat="artist in preview.art.photo.nonUserArtists track by $index">
+                <span>{{ artist.fullname }}</span>
+                <span ng-if="!$last">, </span>
+              </span>
+            </p>
+            <p class="exhibition">
+              <a ui-sref="venue({ permalink: preview.art.exhibition.venue.permalink })">{{ preview.art.exhibition.venue.name }}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arts" masonry infinite-scroll-disabled="ended" infinite-scroll="loadArts()" infinite-scroll-distance="1" preserve-order load-images="true" reload-on-resize>
+      <div masonry-brick class="art masonry-brick" ng-repeat="art in arts track by $index" title="{{ art.photo.caption + (art.photo.artists ? (' by ' + art.photo.artists[0].name.full) : '') }}">
+        <!-- <div class="wrap" style="height: {{ brickHeight(art.photo.photo); }}px;"> -->
+        <div class="wrap">
+          <img ng-click="preview.show($index)" ng-src="{{ art.photo.photo.source | thumb:300 }}" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

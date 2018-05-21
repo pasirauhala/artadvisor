@@ -1,0 +1,14 @@
+<div class="splash" ng-controller="SplashController">
+
+  <div class="modal">
+    <div class="lang">
+      <form name="lang" method="post">
+        <h4>Choose your language</h4>
+        <ul>
+          <li ng-repeat="lang in languages" ng-class="{ active: activeLang(lang) }"><button ng-click="selectLang(lang)" type="submit" name="lang" value="{{ lang }}">{{ lang }}</button></li>
+        </ul>
+      </form>
+    </div>
+  </div>
+
+</div>

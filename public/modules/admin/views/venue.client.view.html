@@ -1,0 +1,10 @@
+<div class="page venue" ng-controller="VenueController">
+
+  <h3>{{ venue.name }}</h3>
+  <div class="file">
+    <div ngf-select ngf-drop ng-model="files" class="drop-box" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" ngf-accept="'image/*'" ngf-change="upload($files)">
+      <div>Click or Drop Images<br />here to upload</div>
+    </div>
+  </div>
+
+</div>

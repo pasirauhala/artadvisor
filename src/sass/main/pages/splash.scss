@@ -1,0 +1,80 @@
+
+.splash {
+
+  .modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    background: url('../../images/splash.png') center 30% no-repeat;
+    background-size: 351px 343px;
+    @include transition(all linear 0.2s);
+
+    @include tablet {
+      background-size: 344px 336px;
+      background-position: center 25%;
+    }
+    @include mobile {
+      background-size: 177px 173px;
+      background-position: center 20%;
+    }
+
+    .lang {
+      width: 100%;
+      position: absolute;
+      bottom: 70px;
+      text-align: center;
+      font-size: 1.6em;
+      font-weight: 200;
+
+      h4 {
+        color: #ffffff;
+      }
+
+      ul {
+        margin-top: 12px;
+
+        @include mobile {
+          margin-top: 8px;
+        }
+
+        li {
+          display: inline-block;
+          border-left: 1px #ffffff solid;
+          padding: 0px 5px 0px 5px;
+          height: 28px;
+          line-height: 0;
+
+          @include mobile {
+            height: 24px;
+            padding: 0px 3px 0px 3px;
+          }
+
+          &:first-child {
+            border-left: 0px none;
+          }
+
+          button {
+            cursor: pointer;
+            background: none;
+            border: 0px none;
+            color: #9a9a9a;
+            font-size: 0.9em;
+            font-weight: 200;
+            height: 100%;
+            padding: 0px 6px 0px 6px;
+            text-transform: uppercase;
+          }
+
+          &.active {
+
+            button {
+              color: #ffffff;
+            }
+          }
+        }
+      }
+    }
+  }
+}

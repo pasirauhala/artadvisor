@@ -1,0 +1,37 @@
+<div class="page exhibitions" ng-controller="ExhibitionsController">
+
+	<div class="row toolbar">
+		<div class="col-md-12">
+			<div class="input-group">
+				<a class="btn btn-primary" href="/event/create" target="_blank">Create Event</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="exhibitions table-responsive" loading-container="table.settings().$loading">
+		<table ng-table="table" class="table table-striped table-bordered table-hover" show-filter="true">
+			<tr class="exhibition" ng-repeat="exhibition in $data">
+				<td data-title="'ID'">{{ exhibition._id }}</td>
+				<td data-title="'Name'" filter="{name: 'text'}">
+					{{ exhibition.name }}
+					<a href="/event/{{ exhibition.permalink }}" target="_blank"><i class="fa fa-external-link"></i></a>
+					<a href="/event/{{ exhibition.permalink }}/edit" target="_blank"><i class="fa fa-pencil-square-o"></i></a>
+				</td>
+				<td data-title="'Description'" filter="{description: 'text'}">{{ exhibition.description.substr(0, 100) }}...</td>
+				<td data-title="'Artists'" filter="{artist: 'text'}">
+					<span ng-repeat="artist in exhibition.artists">
+						<a ng-href="{{ artist.user ? ('/artist/' + artist.user.username) : '' }}">{{ artist.user.fullname || artist.nonUser.fullname }}</a>{{ $last ? '' : ', ' }}
+					</span>
+				</td>
+				<td data-title="'Venue'" filter="{venue: 'text'}">
+					<a ng-href="{{ '/venue/' + exhibition.venue.permalink }}">{{ exhibition.venue.name }}</a>
+				</td>
+				<td data-title="'Dates'">{{ exhibition.startDate | amDateFormat: 'DD.MM.YYYY' }} - {{ exhibition.endDate | amDateFormat: 'DD.MM.YYYY' }}</td>
+				<td data-title="'Actions'">
+					<button ng-click="delete(exhibition)" ng-disabled="updatingExhibition" class="btn btn-danger">Delete</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+</div>

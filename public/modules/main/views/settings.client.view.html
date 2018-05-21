@@ -1,0 +1,192 @@
+<div class="settings" ng-controller="SettingsController">
+
+  <div class="container">
+    <h1><a ng-click="back()"><i class="ion-ios-arrow-back"></i></a>{{ 'Settings' | lang }}</h1>
+    <ul class="options">
+      <li ng-show="userLoggedIn()">
+        <h4 ng-click="toggleSetting($event)">
+          <span>{{ 'Edit profile' | lang }}</span>
+          <span class="message">{{ profileMessage }}</span>
+        </h4>
+        <ul class="inputs">
+          <li>
+            <span ngf-select ngf-capture="'camera'" ng-model="photo.files" class="input file" ngf-multiple="false" ngf-allow-dir="false" ngf-accept="'image/*'" ngf-change="photo.upload($files)">
+              <span class="photo" style="background-image: url('{{ (photo.source | thumb:'50x50') | escape }}')">
+                <i class="ion-image"></i>
+              </span>
+            </span>
+          </li>
+          <li><input name="name[first]" ng-model="user.name.first" type="text" placeholder="{{ 'First Name' | lang }}" required /></li>
+          <li><input name="name[last]" ng-model="user.name.last" type="text" placeholder="{{ 'Last Name' | lang }}" required /></li>
+
+          <li ng-if="user.profileType == 'artist'">
+            <textarea name="name[description]" ng-model="user.description" placeholder="{{ 'Information' | lang }}"></textarea>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="organization" ng-if="userLoggedIn() && user.profileType == 'organizer'">
+        <h4 ng-click="toggleSetting($event)">{{ 'Organization' | lang }}</h4>
+        <ul class="inputs">
+          <li><input name="organization" ng-model="user.organization" type="text" placeholder="{{ 'Organization' | lang }}" /></li>
+        </ul>
+      </li>
+
+      <li class="email" ng-show="userLoggedIn()">
+        <h4 ng-click="toggleSetting($event)">{{ 'Email' | lang }}</h4>
+        <ul class="inputs">
+          <li><input name="email" ng-model="email['new']" type="text" placeholder="{{ 'New Email Address' | lang }}" required /></li>
+          <li ng-show="email.old != email['new']" class="old-email"><span>({{ email.old }})</span></li>
+          <li>
+            <button ng-click="email.change()" type="button" ng-disabled="email.busy"><i class="ion-android-exit"></i></button>
+            <span class="message {{ email.status }}">{{ email.message | lang }}</span>
+          </li>
+        </ul>
+      </li>
+
+      <li class="username ng-cloak" ng-show="userLoggedIn()">
+        <h4 ng-click="toggleSetting($event)">{{ 'Username' | lang }}</h4>
+        <ul class="inputs">
+          <li><input name="username" ng-model="username.value" type="text" placeholder="{{ 'Username' | lang }}" required /></li>
+          <li>
+            <button ng-click="username.change()" type="button" ng-disabled="username.busy"><i class="ion-android-exit"></i></button>
+            <span class="message {{ username.status }}">{{ username.message | lang }}</span>
+          </li>
+        </ul>
+      </li>
+
+      <li class="password ng-cloak" ng-show="userLoggedIn()">
+        <h4 ng-click="toggleSetting($event)">{{ 'Change Password' | lang }}</h4>
+        <ul class="inputs">
+          <li><input name="password.old" ng-model="password.old" type="password" placeholder="{{ 'Old Password' | lang }}" required /></li>
+          <li><input name="password.new" ng-model="password.new" type="password" placeholder="{{ 'New Password' | lang }}" required /></li>
+          <li><input name="password.confirm" ng-model="password.confirm" type="password" placeholder="{{ 'New Password again' | lang }}" required /></li>
+          <li>
+            <button ng-click="password.change()" type="button" ng-disabled="password.busy"><i class="ion-android-exit"></i></button>
+            <span class="message {{ password.status }}">{{ password.message | lang }}</span>
+          </li>
+        </ul>
+      </li>
+
+      <li ng-if="userLoggedIn() && user.profileType == 'artist'">
+        <h4 ng-click="toggleSetting($event)">{{ 'Art genres' | lang }}</h4>
+        <ul class="inputs">
+          <li>
+            <div class="checklist">
+              <div class="checkbox" ng-repeat="genre in genres track by $index" ng-class="{ active: genreActive(genre) }">
+                <label>
+                  <i class="ion-android-checkbox-outline{{ genreActive(genre) ? '': '-blank' }}"></i>
+                  <input name="genres" type="checkbox" checklist-model="user.genres" checklist-value="genre" />
+                  <span class="title">{{ genre | lang }}</span>
+                </label>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li ng-if="userLoggedIn() && user.profileType == 'artist'">
+        <h4 ng-click="toggleSetting($event)">{{ 'Links to other pages' | lang }}</h4>
+        <ul class="inputs">
+          <li>
+            <div class="links">
+              <span class="link" ng-repeat="link in user.links track by $index">
+                <div>
+                  <input class="title" type="text" ng-model="link.title" placeholder="{{ 'title' | lang }}" />
+                  <a class="remove-range" ng-if="user.links.length > 1" ng-click="removeLink($index)"><i class="ion-close-circled"></i></a>
+                  <a class="add-range" ng-if="$last" ng-click="addLink()"><i class="ion-plus-circled"></i></a>
+                </div>
+                <div>
+                  <input class="url" type="text" ng-model="link.url" placeholder="{{ 'url' | lang }}" />
+                </div>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </li>
+
+      <li ng-show="userLoggedIn()" class="linked-accounts && !user.social.length">
+        <h4 ng-click="toggleSetting($event)">{{ 'Linked accounts' | lang }}</h4>
+        <ul>
+          <li ng-repeat="account in social.types" ng-class="{ active: social.linked(account.name) }">
+            <span>
+              {{ account.title | lang }}
+              <span ng-if="social.linked(account.name)">
+                ({{ user.email }})
+                <a ng-click="social.unlink(account.name)">Unlink</a>
+              </span>
+            </span>
+          </li>
+        </ul>
+      </li>
+      <li ng-show="userLoggedIn()">
+        <h4 ng-click="toggleSetting($event)">{{ 'Notifications' | lang }}</h4>
+        <ul>
+          <li>
+            <span>
+              <a ng-class="{ active: notification.active }" ng-click="notification.toggle(true)">{{ 'On' | lang }}</a> / <a ng-class="{ active: !notification.active }" ng-click="notification.toggle(false)">{{ 'Off' | lang }}</a>
+            </span>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h4 ng-click="toggleSetting($event)">{{ 'Change language' | lang }}</h4>
+        <ul>
+          <li ng-repeat="lang in language.list" ng-class="{ active: (lang.name == user.lang) }">
+            <span>
+              <a ng-click="changeLang(lang.name)">{{ lang.title }}</a>
+            </span>
+          </li>
+        </ul>
+      </li>
+      <li ng-show="userLoggedIn()">
+        <h4 ng-click="toggleSetting($event)">{{ 'Change user type' | lang }}</h4>
+        <ul>
+          <li ng-repeat="type in profileType.list" ng-class="{ active: (type.name == user.profileType) }">
+            <span>
+              <a ng-click="user.profileType = type.name">{{ type.title | lang }}</a>
+            </span>
+          </li>
+        </ul>
+      </li>
+      <li ng-if="admin">
+        <h4><a ng-click="goAdmin()">{{ 'Admin Dashboard' | lang }}</a></h4>
+      </li>
+      <li class="spaced">
+        <h4><a ui-sref="about-terms">{{ 'About & Terms' | lang }}</a></h4>
+      </li>
+      <li>
+        <h4><a ui-sref="privacy-policy">{{ 'Privacy Policy' | lang }}</a></h4>
+      </li>
+      <li>
+        <h4><a ui-sref="feedback">{{ 'Feedback' | lang }}</a></h4>
+      </li>
+      <li>
+        <h4><a ui-sref="invite">{{ 'Invite Friends' | lang }}</a></h4>
+      </li>
+      <li class="spaced" ng-hide="userLoggedIn()">
+        <h4><a ui-sref="authentication({ action: 'login', next: '/settings' })">{{ 'Sign In' | lang }}</a></h4>
+      </li>
+      <li ng-hide="userLoggedIn()">
+        <h4><a ui-sref="authentication({ action: 'join', next: '/settings' })">{{ 'Join' | lang }}</a></h4>
+      </li>
+      <li class="spaced" ng-show="userLoggedIn()">
+        <h4><a ng-click="confirmClose = true">{{ 'Close account' | lang }}</a></h4>
+      </li>
+      <li ng-show="userLoggedIn()">
+        <h4 class="no-border"><a ng-click="logout()">{{ 'Sign out' | lang }}</a></h4>
+      </li>
+    </ul>
+  </div>
+
+  <confirm data-show="confirmClose">
+    <div class="confirm-wrap">
+      <h3>{{ 'This action will permanently delete your account. Are you sure you want to close your account?' | lang }}</h3>
+      <div class="buttons">
+        <button ng-click="this.$parent.closeAccount()"><i class="ion-trash-a"></i> {{ 'Close Account' | lang }}</button>
+        <button ng-click="$cancel()"><i class="ion-android-cancel"></i> {{ 'Cancel' | lang }}</button>
+      </div>
+    </div>
+  </confirm>
+
+</div>

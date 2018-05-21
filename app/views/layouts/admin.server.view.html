@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Art Advisor Administration</title>
+
+	<base href="/admin/">
+	<!-- General META -->
+	<meta charset="utf-8">
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<!-- Semantic META -->
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+
+	<!-- Fav Icon -->
+	<link href="{{ root }}/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+	<!--Application CSS Files-->
+	<link rel="stylesheet" href="{{ root }}/style/admin/vendor.min.css">
+	<link rel="stylesheet" href="{{ root }}/style/admin/main.min.css">
+
+	<!-- HTML5 Shim -->
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>	
+	<![endif]-->
+</head>
+
+<body class="ng-cloak">
+	<!--Embedding The User Object-->
+	<script type="text/javascript">
+		var root = "{{ root }}", token = '{{ token.id }}', user_id = '{{ token.user._id.toString() }}', admin = {{ (token.user.roles.indexOf('admin') >= 0) ? 'true' : 'false' }};
+	</script>
+	<!-- HEADER AND NAVBAR -->
+	<header class="navbar navbar-fixed-top navbar-inverse">
+		<div class="container" ng-controller="HeaderController">
+			<div class="navbar-header">
+				<button class="navbar-toggle" type="button" ng-click="toggleCollapsibleMenu()">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a ui-sref="dashboard" class="navbar-brand">Art Advisor Administrator</a>
+			</div>
+			<nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
+				<ul class="nav navbar-nav navbar-right">
+					<li ng-repeat="li in menu.list" ng-class="{ active: menu.active(li.name) }">
+						<a ng-if="li.link" href="javascript:;" ng-bind="li.title" ng-click="li.action()"></a>
+						<a ng-if="!li.link" ui-sref="{% raw %}{{ li.name }}{% endraw %}" ng-bind="li.title"></a>
+					</div>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<section class="content">
+		<section class="container" ui-view></section>
+	</section>
+
+	<div class="preload">
+		<div class="fontAwesome">
+			<span class="normal regular">&nbsp;</span>
+		</div>
+		<div class="glyphicons">
+			<span class="normal regular">&nbsp;</span>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="{{ root }}/script/admin/vendor.min.js"></script>
+	<script type="text/javascript" src="{{ root }}/script/admin/main.min.js"></script>
+
+	<!--[if lt IE 9]>
+	<section class="browsehappy jumbotron hide">
+		<h1>Hello there!</h1>
+		<p>You are using an old browser which we unfortunately do not support.</p>
+		<p>Please <a href="http://browsehappy.com/">click here</a> to update your browser before using the website.</p>
+		<p><a href="http://browsehappy.com" class="btn btn-primary btn-lg" role="button">Yes, upgrade my browser!</a></p>
+	</section>
+	<![endif]-->	
+</body>
+</html>

@@ -1,0 +1,57 @@
+
+popup {
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 10000;
+
+  &.open {
+    display: block;
+  }
+
+  .close {
+    float: right;
+    margin: 16px 20px 0px 0px;
+
+    i {
+      font-size: 2em;
+    }
+  }
+
+  .message {
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 0px;
+
+    .wrap {
+      position: relative;
+      font-size: 1.2em;
+      text-align: center;
+      line-height: 140%;
+    }
+  }
+}
+
+
+.popup-offline, .popup-location {
+  @extend popup;
+
+  .message {
+    text-align: center;
+    color: #ffffff;
+
+    h2 {
+      font-size: 1.5em;
+      margin-bottom: 8px;
+    }
+
+    h4 {
+      font-size: 1.2em;
+    }
+  }
+}

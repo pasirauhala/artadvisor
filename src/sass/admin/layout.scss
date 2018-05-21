@@ -1,0 +1,19 @@
+
+.content {
+	margin-top: 50px;
+  margin-bottom: 20px;
+
+	@include mobile {
+
+	}
+	@include tablet {
+
+	}
+	@include desktop {
+		
+	}
+}
+
+.toolbar {
+	margin-top: 15px;
+}

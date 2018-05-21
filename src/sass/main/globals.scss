@@ -1,0 +1,34 @@
+
+/**
+ * Global variables
+ */
+
+$defaultFontFamily: "Brandon Grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$defaultFontSize: 11pt;
+$defaultFontColor: #ffffff;
+$mobileFontSize: 9.4pt;
+
+$defaultLinkColor: #ffffff;
+$defaultLinkHoverColor: #ffffff;
+$defaultLinkFocusColor: #ffffff;
+
+$mobileMaxWidth: 740px;
+
+$tabletMinWidth: 741px;
+$tabletMaxWidth: 1125px;
+
+$desktopMinWidth: 1126px;
+$desktopMaxWidth: 1435px;
+
+$largeDesktopMinWidth: 1436px;
+$largeDesktopMaxWidth: 1635px;
+
+$extraLargeDesktopMinWidth: 1636px;
+
+$mobileContainer: 294px;
+$tabletContainer: 704px;
+$desktopContainer: 1090px;
+$largeDesktopContainer: 1400px;
+$extraLargeDesktopContainer: 1600px;
+
+$galleryFullWidth: 100000px;

@@ -1,0 +1,26 @@
+
+/**
+ * Carousel module
+ */
+
+carousel, [carousel], [data-carousel] {
+  width: 100%;
+  display: inline-block;
+  opacity: 0;
+  @include transition(0.2s opacity linear);
+
+  ul {
+    display: inline-block;
+
+    li {
+      display: inline-block;
+      font-size: 3.5em;
+      font-weight: bolder;
+      text-transform: uppercase;
+    }
+  }
+
+  &.is-ready {
+    opacity: 1;
+  }
+}

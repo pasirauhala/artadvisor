@@ -1,0 +1,349 @@
+
+> .main {
+  clear: both;
+  font-size: $defaultFontSize;
+
+  h2 {
+    margin-top: 30px;
+    clear: both;
+    width: 100%;
+    display: inline-block;
+
+    > a {
+      > i {
+        font-size: 2em;
+      }
+    }
+
+    a.back {
+      width: 50px;
+      float: left;
+    }
+    a.settings {
+      width: 50px;
+      float: right;
+    }
+
+    @include mobile {
+      a.back {
+        width: 24px;
+      }
+      a.settings {
+        width: 24px;
+      }
+    }
+
+    .input {
+      width: 320px;
+      box-sizing: border-box;
+      padding: 6px 8px 5px 8px;
+      display: block;
+      margin: -6px auto 0px auto;
+      background-color: #171717;
+      border-radius: 4px;
+      vertical-align: top;
+
+      i {
+        width: 28px;
+        vertical-align: top;
+
+        &.magnifying-glass {
+          font-size: 1.7em;
+          background-position: left center;
+        }
+
+        &.reset {
+          float: right;
+          position: absolute;
+          margin: 2px 0px 0px -12px;
+          font-size: 1.3em;
+          opacity: 0;
+          cursor: pointer;
+          @include transition(opacity 0.2s linear);
+
+          &.show {
+            opacity: 1;
+          }
+        }
+      }
+      input {
+        width: 263px;
+        vertical-align: top;
+        padding: 0px 4px 0px 4px;
+        font-size: 1.25em;
+        font-weight: 200;
+        background-color: #171717;
+        color: #ffffff;
+        border: 0px none;
+        margin-left: 5px;
+
+        @include placeholder {
+          color: #808080;
+          font-family: 'PT Serif';
+          font-style: italic;
+          font-size: 0.7em;
+          padding-top: 4px;
+        }
+      }
+
+      @include mobile {
+        width: 230px;
+
+        input {
+          width: 175px;
+        }
+      }
+    }
+
+    ul.actions {
+      list-style: none;
+      margin: 16px auto 0px auto;
+      width: 320px;
+      display: block;
+
+      li {
+        display: inline-block;
+        text-transform: uppercase;
+        font-size: 0.8em;
+
+        &.when {
+          width: 100px;
+          margin-left: 2px;
+
+          @include mobile {
+            width: 96px;
+          }
+        }
+        &.where {
+          width: 130px;
+        }
+        &.save {
+          width: 80px;
+          text-align: right;
+        }
+
+        span {
+          vertical-align: top;
+        }
+
+        a {
+          margin-left: 2px;
+          color: #29a3da;
+          font-weight: bold;
+          vertical-align: top;
+          display: inline-block;
+
+          span {
+            display: inline-block;
+            max-width: 69px;
+            max-height: 12px;
+            overflow: hidden;
+          }
+
+          i {
+            font-size: 0.7em;
+            vertical-align: top;
+          }
+        }
+
+        &.save {
+          a {
+            color: #ffffff;
+
+            i {
+              color: #84be3f;
+              font-size: 1.1em;
+              margin-left: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .col {
+    width: 33.33%;
+    display: inline-block;
+    vertical-align: top;
+    float: left;
+
+    h5 {
+      text-transform: uppercase;
+      font-size: 0.85em;
+    }
+    ul {
+      width: 90%;
+      display: block;
+      clear: both;
+      margin-top: 8px;
+
+      li {
+        display: block;
+        border-bottom: 1px #4d4d4d solid;
+        vertical-align: middle;
+        padding: 5px 0px 5px 0px;
+        margin-top: 4px;
+
+        i {
+          color: #a8272d;
+          font-size: 2em;
+          vertical-align: middle;
+          margin-left: 4px;
+          display: inline-block;
+        }
+        span {
+          color: #666666;
+          font-size: 1.2em;
+          font-weight: bold;
+          vertical-align: middle;
+          display: inline-block;
+          margin-left: 14px;
+          margin-top: -2px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    @include mobile {
+      width: 100%;
+
+      ul {
+        width: 100%;
+      }
+    }
+    @include tablet {
+      width: 50%;
+    }
+  }
+
+  .searches {
+    margin-top: 30px;
+    display: block;
+
+    .previous {
+
+    }
+    .suggestions {
+
+      .wrap {
+        padding: 0px 16px 0px 16px;
+      }
+
+      h5 {
+        padding-left: 4px;
+      }
+
+      ul {
+        width: 100%;
+
+        li {
+          padding: 12px 0px 11px 0px;
+
+          span {
+            margin-left: 4px;
+          }
+        }
+      }
+
+      @include mobile {
+        margin-top: 32px;
+
+        .wrap {
+          padding: 0px;
+        }
+      }
+    }
+
+  }
+
+  .results {
+    margin-top: 12px;
+    display: inline-block;
+    width: 100%;
+    clear: both;
+    vertical-align: top;
+
+    .results-wrap {
+      width: 66.67%;
+      float: left;
+
+      @include mobile {
+        width: 100%;
+        padding-right: 0px;
+      }
+      @include tablet {
+        width: 100%;
+        padding-right: 0px;
+      }
+    }
+
+    .previous {
+      float: right;
+      margin-top: 26px;
+
+      @include tablet {
+        width: 100%;
+
+        ul {
+          width: 100%;
+        }
+      }
+    }
+
+    .result {
+      margin-top: 26px;
+      padding-right: 50px;
+      box-sizing: border-box;
+
+      @include mobile {
+        padding-right: 0px;
+      }
+      @include tablet {
+        padding-right: 0px;
+      }
+
+      h4 {
+        text-transform: uppercase;
+        font-size: 0.8em;
+      }
+      ul {
+        width: 100%;
+
+        li {
+          border-top: 1px #333333 solid;
+          display: block;
+
+          &:first-child {
+            border-top: 0px none;
+            margin-top: 6px;
+          }
+
+          a {
+            font-size: 1.3em;
+            color: #666666;
+            padding: 9px 0px 15px 0px;
+            display: inline-block;
+
+            photo {
+              width: 40px;
+              height: 40px;
+              vertical-align: middle;
+              margin-right: 6px;
+
+              i {
+                color: #ffffff;
+                font-size: 1.5em;
+                margin-top: 4px;
+              }
+            }
+
+            span {
+              display: inline-block;
+              vertical-align: middle;
+            }
+          }
+        }
+      }
+    }
+  }
+}

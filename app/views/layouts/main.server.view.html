@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Art Advisor</title>
+
+	<base href="{{ root }}/">
+	<!-- General META -->
+	<meta charset="utf-8">
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<!-- Social meta -->
+	{% for tag in meta %}{% if tag.name %}<meta name="{{ tag.name }}" content="{{ tag.content }}" />{% elseif tag.property %}<meta property="{{ tag.property }}" content="{{ tag.content }}" />{% endif %}
+	{% endfor %}
+	<!-- Fav Icon -->
+	<link href="{{ root }}/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+	<!--Application CSS Files-->
+	<link rel="stylesheet" href="{{ root }}/style/main/vendor.min.css">
+	<link rel="stylesheet" href="{{ root }}/style/main/main.css">
+
+	<!-- HTML5 Shim -->
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>	
+	<![endif]-->
+</head>
+<body class="ng-cloak">
+	<!--Embedding The User Object-->
+	<script type="text/javascript">
+		var root = "{{ root }}", device = null, token = '{{ token.id }}', admin = {{ admin }}, lang = '{{ token.user.lang || lang || 'en' }}', artCache = {{ JSON.stringify(artCache) }};
+
+		if (window.location.protocol != "https:") {
+    	window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
+		}
+	</script>
+	<section class="content">
+		<section class="menu container" ng-controller="MenuController" ng-init="artCacheTitle = '{{ artCacheTitle }}'">
+			<div class="main" ng-show="active('main')">
+				<table>
+					<tbody>
+						<tr>
+							<td class="side left">
+								<ul>
+									<li ng-if="Authentication.user"><a ui-sref="profile"><i class="ion-person"></i></a></li>
+									<li><a ui-sref="search"><i class="ion-android-search"></i></a></li>
+									<li><a ui-sref="settings"><i class="ion-gear-a"></i></a></li>
+								</ul>
+							</td>
+							<td class="center">
+								<a href="javascript:;" ng-click="goHome()"><img src="{{ root }}/images/logo.png" /></a>
+							</td>
+							<td class="side right">
+								<ul>
+									<li><a ui-sref="map"><i class="ion-android-pin"></i></a></li>
+								</ul>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- main nav -->
+			<div class="landing clearfix" sliding-menu wrapper=".menu-wrap" active="{% raw %}{{menuActive}}{% endraw %}" ng-if="active('landing')" ng-init="initLanding()">
+				<div class="menu-wrap">
+					<ul class="menu-list">
+						<li class="item {% raw %}{{ menu.sref }}{% endraw %}" ng-repeat="menu in menuItems">
+							<a>{% raw %}{{ menu.title | lang }}{% endraw %}</a>
+						</li>
+					</ul>
+				</div>
+				<a class="prev" ng-hide="hidePrev"></a>
+				<a class="next" ng-hide="hideNext"></a>
+				<div class="pager">
+					<a class="dot" ng-repeat="dot in menuItems" ng-click="gotoPage($index)"><i class="fa fa-circle"></i></a>
+				</div>
+			</div>
+			<!-- Cities list -->
+			<div class="cities" data-ng-class="{ 'is-open': cities.open, 'is-complete': !cities.busy }">
+				<div class="cities-wrap" data-ng-style="{ 'max-width': brickWidth() }" ng-if="active('landing')" data-ng-click="$event.stopPropagation()">
+					<div class="selected" data-ng-click="cities.toggle()">
+						<span>
+							{% raw %}{{ cities.active.country.code || '---' }}{% endraw %} | 
+							{% raw %}{{ (cities.active.name | lang) || '---' }}{% endraw %}
+						</span>
+						<i data-ng-class="{ 'ion-ios-arrow-down': !cities.open, 'ion-ios-arrow-up': cities.open }"></i>
+					</div>
+					<div class="list">
+						<ul>
+							<li data-ng-repeat="country in cities.list track by $index">
+								<span>{% raw %}{{ country.name }}{% endraw %}</span>
+								<ul>
+									<li data-ng-repeat="city in country.cities track by $index" data-ng-click="cities.select(city)" data-ng-class="{ 'has-events': !!city.hasEvents }">{% raw %}{{ city.name | lang }}{% endraw %}</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- main nav (end) -->
+			<div class="authenticated" ng-show="active('authenticated')">
+				<a class="back" ng-click="back()"><i class="ion-android-close"></i></a>
+				<a class="settings" ui-sref="settings"><i class="ion-gear-a"></i></a>
+			</div>
+		</section>
+		
+		<section ui-view class="view" onload="scrollTop()"></section>
+
+		<section class="footer container ng-cloak" ng-controller="FooterController">
+			<div ng-show="show()">
+				<p>© {{ year }} ART ADVISOR. {% raw %}{{ 'ALL RIGHTS RESERVED' | lang | uppercase }}{% endraw %}.</p>
+			</div>
+		</section>
+	</section>
+
+	<div class="preload">
+		<div class="brandonGrotesque">
+			<span class="bolder">&nbsp;</span>
+			<span class="light">&nbsp;</span>
+			<span class="bold">&nbsp;</span>
+			<span class="normal">&nbsp;</span>
+		</div>
+		<div class="pTSerif">
+			<span class="normal bold">&nbsp;</span>
+			<span class="italic bold">&nbsp;</span>
+			<span class="normal regular">&nbsp;</span>
+			<span class="normal regular">&nbsp;</span>
+		</div>
+		<div class="ionicons">
+			<span class="normal regular">&nbsp;</span>
+		</div>
+		<div class="fontAwesome">
+			<span class="normal regular">&nbsp;</span>
+		</div>
+	</div>
+
+	<div data-offline class="popup-offline" ng-class="{ open: offline }" ng-cloak>
+		<div class="message">
+			<h2>{% raw %}{{ 'Network Error' | lang }}{% endraw %}</h2>
+			<h4>{% raw %}{{ 'Check network connectivity' | lang }}{% endraw %}</h4>
+			<h4>{% raw %}{{ 'Please try again by refreshing the page' | lang }}{% endraw %}</h4>
+		</div>
+	</div>
+
+	<div data-location class="popup-location" ng-class="{ open: unavailable }" ng-cloak>
+		<div class="message">
+			<h2>{% raw %}{{ 'No Location Available' | lang }}{% endraw %}</h2>
+			<h4>{% raw %}{{ 'An error occurred while acquiring your location' | lang }}{% endraw %}</h4>
+			<h4>{% raw %}{{ 'Make sure you allow access to location services' | lang }}{% endraw %}</h4>
+			<h4>{% raw %}{{ 'Please try again by refreshing the page' | lang }}{% endraw %}</h4>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="{{ root }}/script/main/vendor.min.js"></script>
+	<script type="text/javascript" src="{{ root }}/script/main/main.js"></script>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	  ga('create', 'UA-69796419-1', 'auto');
+	</script>
+	
+	<!--[if lt IE 9]>
+	<section class="browsehappy jumbotron hide">
+		<h1>Hello there!</h1>
+		<p>You are using an old browser which we unfortunately do not support.</p>
+		<p>Please <a href="http://browsehappy.com/">click here</a> to update your browser before using the website.</p>
+		<p><a href="http://browsehappy.com" class="btn btn-primary btn-lg" role="button">Yes, upgrade my browser!</a></p>
+	</section>
+	<![endif]-->	
+</body>
+</html>

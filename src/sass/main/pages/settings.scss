@@ -1,0 +1,296 @@
+
+.view > .settings {
+  margin-top: 42px;
+
+  h1 {
+    text-transform: uppercase;
+    font-size: 1.3em;
+    text-align: center;
+    clear: both;
+    vertical-align: center;
+    padding: 10px 0px 10px 0px;
+
+    i {
+      float: left;
+      font-size: 1.8em;
+      vertical-align: center;
+      margin-top: -10px;
+    }
+  }
+
+  ul.options {
+    clear: both;
+    margin-top: 60px;
+    margin-left: 0px;
+
+    li {
+
+      h4 {
+        font-size: 1.2em;
+        border-bottom: 1px #444444 solid;
+        padding: 13px 0px 13px 0px;
+        cursor: pointer;
+
+        &.no-border {
+          border-bottom: 0px none;
+        }
+
+        .message {
+          float: right;
+          text-transform: uppercase;
+          font-weight: 200;
+          font-size: 0.6em;
+          margin-top: 4px;
+        }
+      }
+      > ul {
+        display: none;
+        margin-left: 0px;
+        margin-top: 13px;
+        margin-bottom: 12px;
+
+        > li {
+          padding-left: 30px;
+          margin-top: 3px;
+
+          input, textarea {
+            background-color: #000000;
+            color: #ffffff;
+            border: 0px none;
+            font-size: 1.2em;
+            font-weight: normal;
+            padding: 0px 6px 0px 6px;
+            box-sizing: border-box;
+            width: 100%;
+
+            @include placeholder {
+              color: #808080;
+            }
+          }
+          textarea {
+            border: 1px solid rgb(68, 68, 68);
+            border-radius: 4px;
+            margin: 8px 0px;
+            min-height: 100px;
+          }
+          button {
+            border: 0px none;
+            background: none;
+            cursor: pointer;
+            display: inline;
+            vertical-align: middle;
+
+            i {
+              font-size: 2em;
+              color: #ffffff;
+            }
+          }
+          span {
+            font-size: 1.2em;
+            font-weight: normal;
+            color: #808080;
+            padding: 0px 6px 0px 6px;
+            display: block;
+
+            span {
+              font-size: 1em;
+            }
+
+            a {
+              color: #808080;
+
+              &.active {
+                color: #ffffff;
+              }
+            }
+          }
+
+          .message {
+            display: inline;
+            opacity: 1;
+            font-size: 1em;
+            vertical-align: middle;
+            @include transition(all linear 0.2s);
+
+            &.empty {
+              opacity: 0;
+            }
+            &.success {
+              color: #00cc00;
+            }
+            &.error {
+              color: #cc0000;
+            }
+          }
+
+          &.active {
+            span {
+              color: #ffffff;
+            }
+            a {
+              color: #ffffff;
+            }
+          }
+        }
+
+        &.inputs {
+          li {
+            margin-top: 0px;
+
+            .input.file {
+              display: inline-block;
+              margin-top: 4px;
+
+              .photo {
+                width: 50px;
+                height: 50px;
+                display: inline-block;
+                margin-right: 6px;
+                border-radius: 50%;
+                background-color: #333;
+                padding: 0px;
+                margin: 0px 6px 0px 0px;
+                vertical-align: middle;
+                text-align: center;
+                cursor: pointer;
+                background-size: cover;
+                background-position: center center;
+
+                i {
+                  display: none;
+                  color: #fff;
+                  font-size: 1em;
+                  vertical-align: top;
+                  margin-top: 14px;
+                  text-shadow: 1px 1px 1px #333;
+                }
+
+                &:hover {
+
+                  i {
+                    display: inline-block;
+                  }
+                }
+              }
+            }
+          }
+
+
+          .checklist {
+            font-weight: 200;
+            margin-top: 4px;
+
+            .radio, .checkbox {
+              clear: both;
+              color: #808080;
+
+              label {
+                cursor: pointer;
+
+                i {
+                  background-position: left center;
+                  width: 32px;
+                  display: inline-block;
+                  vertical-align: middle;
+                }
+                input {
+                  display: none;
+                }
+                span {
+                  font-weight: normal;
+                  display: inline-block;
+                }
+                .hint {
+                  clear: both;
+                  padding-left: 36px;
+                  margin-top: 1px;
+                }
+              }
+
+              &.active {
+                color: #ffffff;
+
+                span {
+                  color: #ffffff;
+                }
+              }
+
+              &.indent {
+                margin-left: 34px;
+              }
+            }
+          }
+
+          .links {
+            display: inline-block;
+
+            .link {
+              display: block;
+              font-size: 1em;
+              margin-top: 12px;
+
+              &:first-child {
+                margin-top: 0px;
+              }
+
+              .title {
+                width: 300px;
+              }
+              .url {
+                width: 300px;
+              }
+
+              input {
+                display: inline-block;
+
+                @include mobile {
+                  padding: 4px 0px 4px 0px;
+                  width: 168px !important;
+                }
+              }
+
+              &:first-child {
+
+                input {
+                  padding-top: 8px;
+                }
+              }
+              &:last-child {
+
+                input {
+                  padding-bottom: 8px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &.open {
+
+        > ul {
+          display: block;
+        }
+      }
+
+      &.spaced {
+        margin-top: 44px;
+      }
+
+      &.email {
+
+        .old-email {
+          margin-top: 8px;
+        }
+
+      }
+
+      &.linked-accounts {
+
+        > ul > li span {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

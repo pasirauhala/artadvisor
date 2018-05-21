@@ -1,0 +1,241 @@
+<div class="artist" ng-controller="ArtistController">
+
+  <div class="container">
+    <div class="user-menu">
+      <table>
+        <tbody>
+          <tr>
+            <td class="side left close">
+              <a tooltips tooltip-side="bottom" tooltip-lazy="false" tooltip-content="Close" ng-click="menu.back()"><i class="ion-android-close"></i></a>
+            </td>
+            <td class="others">
+              <a tooltips tooltip-side="bottom" tooltip-lazy="false" tooltip-content="Report this page" ng-click="menu.others()">
+                <i class="fa fa-circle"></i>
+                <i class="fa fa-circle"></i>
+                <i class="fa fa-circle"></i>
+              </a>
+            </td>
+            <td class="recommend">
+              <a tooltips tooltip-side="bottom" tooltip-lazy="false" tooltip-content="{{ menu.recommended ? 'Remove from' : 'Add to' }} Recommended" ng-click="menu.recommend()"><i class="ion-ios-star{{ menu.recommended ? '' : '-outline' }}"></i></a>
+            </td>
+            <td class="favorite">
+              <a tooltips tooltip-side="bottom" tooltip-lazy="false" tooltip-content="{{ menu.favorited ? 'Remove from' : 'Add to' }} Favorites" ng-click="menu.favorite()"><i class="ion-ios-heart{{ menu.favorited ? '' : '-outline' }}"></i></a>
+            </td>
+            <td class="share">
+              <a tooltips tooltip-side="bottom" tooltip-lazy="false" tooltip-content="Share this page" ng-click="share.show()"><i class="ion-paper-airplane"></i></a>
+            </td>
+            <td class="side right location">
+              <a tooltips tooltip-side="bottom" tooltip-lazy="false" tooltip-content="Go to Map page" ui-sref="map"><i class="ion-ios-location"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="photos container">
+    <div class="gallery" hm-swipeleft="touch.flick($event, -1)" hm-swiperight="touch.flick($event, 1)" hm-dragstart="touch.drag.start($event)" hm-drag="touch.drag.on($event)" hm-dragend="touch.drag.end($event)">
+      <ul>
+        <li ng-if="!photos.length">
+          <img ng-src="/images/no-image.png" />
+        </li>
+        <li ng-repeat="photo in photos track by $index" ng-class="{ loading: photo.loading }">
+          <img ng-click="modal.set(photos, 'id', photo.id)" ng-src="{{ photo.source | thumb:'0x264' }}" />
+          <a class="remove-photo" ng-click="removePhoto(photo)" ng-if="owner() && !photo.loading">
+            <i class="ion-android-close"></i>
+          </a>
+          <a class="edit-photo" ng-click="editPhoto(photo)" ng-if="owner() && !photo.loading">
+            <i class="ion-pricetag"></i>
+          </a>
+        </li>
+        <li class="upload" ng-if="owner()">
+          <button ngf-select ngf-capture="'camera'" ng-model="files" class="file" ngf-multiple="true" ngf-allow-dir="true" ngf-accept="'image/*'" ngf-change="upload($files)">
+            <i class="ion-android-add-circle"></i>
+          </button>
+        </li>
+      </ul>
+      <div class="fade left"></div>
+      <div class="fade right"></div>
+    </div>
+  </div>
+
+  <div class="photos-warning container" ng-show="!photos.length && owner()">
+    <p>{{ 'Warning! You must upload at least one (1) photo to allow your page to be publicly viewable' }}</p>
+  </div>
+
+  <div class="information">
+    <div class="container">
+
+      <div class="column column-left">
+        <h2>
+          <table>
+            <tbody>
+              <tr>
+                <td class="the-photo">
+                  <photo user="artist">
+                    <i class="ion-android-contact"></i>
+                  </photo>
+                </td>
+                <td>
+                  <span>{{ artist.name.full }}</span>
+                  <a class="edit-profile" ui-sref="settings" ng-if="owner()">
+                    (Edit Profile)
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </h2>
+        <div class="divider"></div>
+        <div class="description" ng-bind-html="artist.description | plainToHtml"></div>
+        <div class="others">
+          <ul>
+            <li class="genre" ng-if="artist.genres && artist.genres.length">
+              <div class="title">{{ 'Genre' | lang }}</div>
+              <div class="value">
+                <span ng-repeat="genre in artist.genres track by $index">{{ (($index > 0) ? ', ' : '') }}<a ui-sref="search({ q: genre })">{{ genre | lang }}</a></span>
+              </div>
+            </li>
+            <li class="website" ng-show="website">
+              <div class="title">{{ 'Web' | lang }}</div>
+              <div class="value" ng-repeat="website in artist.websites track by $index"><a href="{{ website }}" target="_blank">{{ website }}</a></div>
+            </li>
+            <li class="publications" ng-if="artist.links && artist.links.length">
+              <div class="title">{{ 'Links to other pages' | lang }}</div>
+              <div class="value" ng-repeat="link in artist.links">
+                <a href="{{ link.url | link }}" target="_blank">{{ link.title || link.url }}</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="column column-right">
+        <h3>{{ 'Events' | lang }}</h3>
+        <div class="exhibition" ng-repeat="exhibition in artist.exhibitions" ng-show="showExhibition($index)">
+          <a ui-sref="exhibition({ permalink: exhibition.permalink })"><h4>{{ exhibition.name }} - {{ exhibition.startDate | amDateFormat:'D.M.YYYY' }} - {{ exhibition.endDate | amDateFormat:'D.M.YYYY' }}</h4></a>
+          <h5>{{ exhibition.owner.name.full }}</h5>
+          <div class="gallery" hm-swipeleft="touch.flick($event, -1)" hm-swiperight="touch.flick($event, 1)" hm-dragstart="touch.drag.start($event)" hm-drag="touch.drag.on($event)" hm-dragend="touch.drag.end($event)">
+            <ul>
+              <li ng-repeat="photo in exhibition.gallery.photos track by $index">
+                <img ng-click="modal.set(exhibition.gallery.photos, 'order', photo.order)" ng-src="{{ photo.photo.source | thumb:'0x100' }}" />
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="buttons">
+          <a class="btn btn-past-exhibitions" href="" ng-click="showAll = !showAll">{{ ((showAll ? 'Hide' : 'Show') + ' past events') | lang }} </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="feedback container">
+    <comments data-source="commentSource" data-owners="[ artist._id ]">
+      <div class="wrap">
+        <h3>{{ 'Feedback' | lang }}</h3>
+        <div class="post">
+          <textarea ng-model="content" placeholder="{{ 'type comment' | lang }}"{{ busy ? ' disabled' : '' }}></textarea>
+          <button ng-click="submit()"{{ busy ? ' disabled' : '' }}><i class="ion-android-exit rotate-90"></i></button>
+        </div>
+        <ul>
+          <li class="comment" ng-repeat="comment in comments track by $index">
+            <div class="head">
+              <a href="{{ artistPage(comment, '#') }}" class="{{ artistPage(comment) ? '' : 'no-link' }}">{{ ownerName(comment) }}</a>
+              <span class="date">{{ comment.created | amDateFormat:'D.M.YYYY' }}</span>
+              <a class="remove ng-cloak" ng-click="remove(comment)" ng-if="canRemove(comment)"><i class="ion-android-cancel"></i></a>
+            </div>
+            <div class="body" ng-bind-html="comment.content | plainToHtml"></div>
+          </li>
+        </ul>
+        <div class="buttons ng-cloak" ng-show="comments.length < count">
+          <a class="btn btn-more-comments" ng-click="load()" ng-class="{ disabled: busy }">{{ 'Show more feedbacks' | lang }}</a>
+        </div>
+      </div>
+    </comments>
+  </div>
+
+  <modal class="art-modal" ng-show="modal.id !== null" items="modal.items" index="modal.index" active="modal.id" hm-swipeleft="next()" hm-swiperight="previous()">
+
+    <a class="close" ng-click="close()">
+      <i class="ion-android-close"></i>
+    </a>
+    <div class="wrap">
+      <div class="art" style="background-image: url('{{ ((item.source  || item.photo.source) | thumb:1200) | escape }}')">
+        <a class="nav left" ng-click="previous()">
+          <i class="ion-chevron-left"></i>
+        </a>
+        <a class="nav right" ng-click="next()">
+          <i class="ion-chevron-right"></i>
+        </a>
+        <div class="text">
+          <p class="title">
+            {{ item.title || item.photo.title }}
+          </p>
+          <p class="caption">
+            <span ng-repeat="artist in item.nonUserArtists track by $index">
+              <span>{{ artist.fullname }}</span>
+              <span ng-if="!$last">, </span>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </modal>
+
+  <share ng-show="share.active" active="share.active">
+    <a class="close" ng-click="close()">
+      <i class="ion-android-close"></i>
+    </a>
+    <div class="wrap">
+      <ul class="social">
+        <li class="facebook">
+          <button socialshare socialshare-provider="facebook" socialshare-url="{{ target }}">
+            <i class="ion-social-facebook"></i> Facebook
+          </button>
+        </li>
+        <li class="twitter">
+          <button socialshare socialshare-provider="twitter" socialshare-url="{{ target }}">
+            <i class="ion-social-twitter"></i> Twitter
+          </button>
+        </li>
+        <li class="email">
+          <a href="mailto:?subject=Check%20this%20out&body={{ target }}"><i class="ion-email"></i>{{ 'Email a Friend' | lang }}</a>
+        </li>
+      </ul>
+    </div>
+    
+  </share>
+
+  <div class="edit-photo-modal ng-cloak" ng-show="photo && photo.id">
+    <a class="close" ng-click="photo = null">
+      <i class="ion-android-close"></i>
+    </a>
+    <div class="edit-photo-modal-wrap">
+      <form class="default">
+        <div class="inputs">
+          <img class="the-image" ng-src="{{ photo.source | thumb:'0x200' }}" />
+          <div class="input title">
+            <input type="text" ng-model="photo.title" placeholder="{{ 'title' | lang }}" />
+          </div>
+          <div class="input artists">
+            <tags-input name="artists" ng-model="photo.artists" key-property="_id" display-property="fullname" placeholder="{{ (photo.artists.length ? 'type artist name' : 'artist(s)') | lang }}" template="tag-template" add-from-autocomplete-only="false" replace-spaces-with-dashes="false" on-tag-added="artists.added($tag)" ng-class="{ empty: !photo.artists.length, filled: photo.artists.length }">
+              <auto-complete source="artists.load($query)" min-length="1" debounce-delay="1200"></auto-complete>
+            </tags-input>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="text/ng-template" id="tag-template">
+    <div class="tag-template">
+      <photo ng-if="data.name.full || data.fullname" user="data" />
+      <span>{{ data.name.full || data.name || data.fullname }}</span>
+      <a class="remove-button" ng-click="$removeTag()"><i class="ion-close-circled"></i></a>
+    </div>
+  </script>
+
+</div>

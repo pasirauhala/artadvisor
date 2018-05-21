@@ -1,0 +1,118 @@
+
+.opening-hours {
+  .group {
+
+    span {
+      color: #808080;
+      display: inline-block;
+
+      &.day {
+        width: 70px;
+        vertical-align: top;
+        margin-top: 3px;
+        text-transform: lowercase;
+
+        @include mobile {
+          width: 56px;
+        }
+      }
+    }
+
+    &.special {
+
+      span.day {
+        width: 78px;
+      }
+    }
+
+    .ranges {
+      display: inline-block;
+
+      @include mobile {
+        display: block;
+        margin-top: 6px;
+        margin-left: -8px;
+      }
+
+      .range {
+        display: block;
+        clear: both;
+
+        input.date {
+          padding: 0px;
+          width: 136px;
+          float: left;
+
+          @include mobile {
+            margin-left: 8px;
+            margin-bottom: 2px;
+            width: 200px;
+          }
+        }
+
+        .add-range {
+          display: none;
+          vertical-align: middle;
+        }
+        .remove-range {
+          vertical-align: middle;
+        }
+
+        &:first-child {
+          .remove-range {
+            
+          }
+        }
+        &:last-child {
+          .add-range {
+            display: inline-block;
+          }
+        }
+      }
+    }
+    select {
+      font-size: 1em;
+      color: #ffffff;
+      padding: 0px;
+      background-color: #1a1a1a;
+      border: 0px none;
+      vertical-align: middle;
+      display: inline-block;
+      outline: none;
+    }
+    .tickboxes {
+      margin-top: 8px;
+
+      .tickbox {
+        cursor: pointer;
+			  @include userSelect(none);
+
+        label {
+          cursor: pointer;
+
+          i {
+            font-size: 1em;
+          }
+          span {
+            font-size: 1em;
+            vertical-align: top;
+            margin-left: 8px;
+          }
+        }
+      }
+    }
+
+    &.appointment {
+
+      label {
+        cursor: pointer;
+        
+        span {
+          font-size: 1em;
+          vertical-align: top;
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,106 @@
+
+body {
+	font-family: $defaultFontFamily;
+	font-size: $defaultFontSize;
+	background: #000000;
+	color: $defaultFontColor;
+
+	@include mobile {
+		font-size: $mobileFontSize;
+	}
+
+	&.enclosed {
+		overflow: hidden;
+	}
+}
+
+a {
+	color: $defaultLinkColor;
+	text-decoration: none;
+	cursor: pointer;
+}
+a:focus {
+	color: $defaultLinkFocusColor;
+	text-decoration: none;
+}
+a:hover {
+	color: $defaultLinkHoverColor;
+	text-decoration: none;
+}
+
+input, button, textarea {
+	outline: none;
+	font-family: $defaultFontFamily;
+}
+
+.white {
+	color: #ffffff !important;
+}
+
+.markerLabel {
+	width: 300px;
+	text-align: center;
+	font-family: $defaultFontFamily;
+	text-transform: uppercase;
+	font-size: 1.2em;
+}
+
+.normal {
+	font-style: normal;
+}
+.italic {
+	font-style: italic;
+}
+.light {
+	font-weight: 200;
+}
+.regular {
+	font-weight: normal;
+}
+.bold {
+	font-weight: bold
+}
+.bolder {
+	font-weight: bolder;
+}
+
+.rotate-90 {
+	@include rotate(90deg);
+}
+
+.hidden {
+	display: none !important;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+.container {
+	margin: 0px auto 0px auto;
+	clear: both;
+	overflow: hidden;
+	width: 100%;
+
+	@include mobile {
+		width: $mobileContainer;
+	}
+	@include tablet {
+		width: $tabletContainer;
+	}
+	@include desktop {
+		width: $desktopContainer;
+	}
+	@include largeDesktop {
+		width: $largeDesktopContainer;
+	}
+	@include extraLargeDesktop {
+		width: $extraLargeDesktopContainer;
+	}
+}
+
+.footer {
+	font-size: 90%;
+	margin: 16px auto 16px auto;
+	text-align: center;
+}

@@ -1,0 +1,37 @@
+
+.view > .feedback {
+  margin-top: 42px;
+
+  h1 {
+    text-transform: uppercase;
+    font-size: 1.3em;
+    text-align: center;
+    clear: both;
+    vertical-align: center;
+    padding: 10px 0px 10px 0px;
+
+    i {
+      float: left;
+      font-size: 1.8em;
+      vertical-align: center;
+      margin-top: -10px;
+    }
+  }
+
+  .content {
+
+    .wrap {
+      margin: 80px auto 0px auto;
+      width: 100%;
+      max-width: 450px;
+
+      p {
+        font-size: 1.1em;
+        font-weight: 200;
+        text-align: center;
+      }
+
+    }
+  }
+
+}

@@ -1,0 +1,65 @@
+
+.user-menu {
+  margin-top: 10px;
+
+  table {
+    width: 100%;
+    text-align: center;
+
+    td {
+      vertical-align: middle;
+
+      a {
+        display: block;
+        margin: 0px auto 0px auto;
+        width: 80px;
+
+        @include mobile {
+          width: 40px;
+        }
+
+        i {
+          font-size: 1.8em;
+        }
+      }
+    }
+
+    .others {
+      i {
+        font-size: 0.5em;
+      }
+    }
+    .recommend {
+      i {
+        font-size: 2.4em;
+      }
+    }
+    .favorite {
+      i {
+        font-size: 2.4em;
+      }
+    }
+    .share {
+      i {
+        font-size: 2em;
+      }
+    }
+
+    .side {
+      width: 120px;
+
+      @include mobile {
+        width: 40px;
+      }
+      @include tablet {
+        width: 60px;
+      }
+    }
+    .side.left {
+      text-align: left;
+    }
+    .side.right {
+      text-align: right;
+    }
+  }
+}

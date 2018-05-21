@@ -1,0 +1,6 @@
+Hello,
+
+You have been invited by {{ _name }} to join us in Art Advisor
+Please visit our website at {{ link }}
+
+Art Advisor

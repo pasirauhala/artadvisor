@@ -1,0 +1,45 @@
+<div class="feedback" ng-controller="FeedbackController">
+
+  <div class="container">
+    <h1><a ng-click="back()"><i class="ion-ios-arrow-back"></i></a>{{ 'Feedback' | lang }}</h1>
+    <div class="content">
+
+      <div class="wrap">
+        <div class="form">
+          <form class="default" ng-submit="submit()" autocomplete="off" ng-disabled="busy">
+            <p>
+              {{ 'Tell us what you think of our website' | lang }}
+            </p>
+            <div class="inputs">
+              <div class="input name" ng-hide="loggedIn">
+                <label>
+                  <input type="text" placeholder="{{ 'your name' | lang }}" name="name" ng-model="input.name" />
+                </label>
+              </div>
+              <div class="input email" ng-hide="loggedIn">
+                <label>
+                  <input type="text" placeholder="{{ 'your email' | lang }}" name="email" ng-model="input.email" />
+                </label>
+              </div>
+              <div class="input subject">
+                <label>
+                  <input type="text" placeholder="{{ 'subject' | lang }}" name="subject" ng-model="input.subject" />
+                </label>
+              </div>
+              <div class="input content">
+                <label>
+                  <textarea placeholder="{{ 'message' | lang }}" name="content" ng-model="input.content"></textarea>
+                </label>
+              </div>
+            </div>
+            <div class="buttons">
+              <span ng-class="{ empty: !response.message, success: response.success, error: !response.success }" class="message">{{ response.message | lang }}</span>
+              <button type="submit" class="submit"><i class="ion-android-exit rotate-90"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

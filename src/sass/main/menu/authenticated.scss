@@ -1,0 +1,41 @@
+
+.authenticated {
+  display: block;
+  width: 100%;
+  clear: both;
+  overflow: hidden;
+  margin-top: 22px;
+
+  a {
+
+    i {
+      font-size: 2em;
+    }
+  }
+  .back {
+    float: left;
+    margin-left: 0px; //28px;
+
+    /*
+    @include tablet {
+      margin-left: 18px;
+    }
+    @include mobile {
+      margin-left: 22px;
+    }
+    */
+  }
+  .settings {
+    float: right;
+    margin-right: 0px; //28px;
+
+    /*
+    @include tablet {
+      margin-right: 18px;
+    }
+    @include mobile {
+      margin-right: 18px;
+    }
+    */
+  }
+}

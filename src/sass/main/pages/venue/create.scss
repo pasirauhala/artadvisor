@@ -1,0 +1,181 @@
+
+.venue-create {
+
+  h2 {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.6em;
+    margin-top: 8px;
+
+    photo {
+      margin: -3px 1px 0px 0px;
+      width: 32px;
+      height: 32px;
+      vertical-align: middle;
+
+      i {
+        margin-top: 4px;
+      }
+    }
+  }
+
+  .form {
+    padding: 8px 80px 0px 75px;
+
+    .input {
+
+      &.address {
+        
+        label {
+          display: inline-block;
+          width: 100%;
+
+          &.country {
+            margin-top: 12px;
+          }
+        }
+      }
+
+      &.max {
+
+        tags-input .tags {
+
+          .input {
+            display: none;
+          }
+        }
+
+        &.address {
+
+          tags-input .tags {
+            padding-top: 9px;
+            padding-bottom: 10px;
+          }
+        }
+      }
+    }
+    
+    @include tablet {
+      padding: 8px 55px 0px 50px;
+    }
+    @include mobile {
+      padding: 8px 0px 0px 30px;
+    }
+
+    span.label {
+      cursor: pointer !important;
+    }
+
+    .uploaded {
+
+      .photo {
+        margin: 8px 8px 0px 0px;
+        display: inline-block;
+
+        .icon {
+          position: absolute;
+          margin-left: 0px;
+          margin-top: 6px;
+          font-size: 1.2em;
+          color: #000000;
+          cursor: pointer;
+        }
+
+        img {
+          height: 100px;
+        }
+
+        &.loading {
+          background-color: #191919;
+          height: 100px;
+          width: 100px;
+          background-image: url('/images/loading.gif');
+          background-position: center center;
+          background-repeat: no-repeat;
+
+          .icon {
+            display: none;
+          }
+
+          img {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .inputs {
+
+      .input.address {
+
+        .city {
+          margin-top: 12px;
+        }
+      }
+      
+      .input.links {
+
+        .links.group {
+          padding: 0px 14px 0px 14px;
+
+          > .title {
+            color: #808080;
+            display: inline-block;
+            width: 120px;
+            vertical-align: top;
+            margin-top: 11px;
+          }
+
+          .links {
+            display: inline-block;
+
+            .link {
+              display: block;
+
+              .title {
+                width: 300px;
+              }
+              .url {
+                width: 300px;
+              }
+
+              input {
+                display: inline-block;
+
+                @include mobile {
+                  padding: 4px 0px 4px 0px;
+                  width: 168px !important;
+                }
+              }
+
+              &:first-child {
+
+                input {
+                  padding-top: 8px;
+                }
+              }
+              &:last-child {
+
+                input {
+                  padding-bottom: 8px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .input .map {
+        margin-top: 10px;
+
+        gmap > div {
+          overflow: hidden;
+          border-radius: 6px;
+          width: 100%;
+          height: 320px;
+          background-color: #000 !important;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,254 @@
+<div class="exhibition-create" ng-controller="CreateExhibitionController" ng-click="hideDatepicker()">
+
+  <div class="container">
+    <h2>
+      <a ui-sref="profile">
+        <photo>
+          <i class="ion-android-contact"></i>
+        </photo>
+      </a>
+      <span>{{ 'Create new event' | lang }}</span>
+    </h2>
+    <div class="form">
+      <form class="default" ng-submit="form.submit()" autocomplete="off">
+        <div class="inputs">
+          <div class="input venue" ng-class="{ max: (form.input.venue.length > 0) }">
+            <label>
+              <i class="icon ion-ios-location"></i>
+              <tags-input name="venue" ng-model="form.input.venue" key-property="_id" display-property="name" placeholder="{{ 'choose an existing venue' | lang }}" template="tag-template" add-from-autocomplete-only="true" replace-spaces-with-dashes="false" on-tag-added="prefillEvent()">
+                <auto-complete source="form.loadVenues($query)" min-length="1" debounce-delay="1200"></auto-complete>
+              </tags-input>
+            </label>
+            <div class="message error" ng-class="{ show: blurred('venue') && !form.input.venue.length }">{{ 'Please select a venue' | lang }}</div>
+          </div>
+          <div class="input name">
+            <label>
+              <i class="icon ion-flag"></i>
+              <input type="text" placeholder="{{ 'event name' | lang }}" name="name" ng-model="form.input.name" ng-blur="blur('name')" />
+            </label>
+            <div class="message error" ng-class="{ show: blurred('name') && !form.input.name }">{{ 'Please add event name' | lang }}</div>
+          </div>
+          <div class="input artists">
+            <label>
+              <i class="icon ion-person-stalker"></i>
+              <tags-input name="artists" ng-model="form.input.artists" key-property="_id" display-property="fullname" placeholder="{{ 'Type artist name here and press Enter to add another artist' | lang }}" template="tag-template" add-from-autocomplete-only="false" replace-spaces-with-dashes="false" on-tag-added="form.tagAdded($tag)" ng-class="{ empty: !form.input.artists.length, filled: form.input.artists.length }">
+                <auto-complete source="artists.query($query)" min-length="1" debounce-delay="0" template="autocomplete-template"></auto-complete>
+              </tags-input>
+            </label>
+            <div class="message error" ng-class="{ show: blurred('artists') && !form.input.artists.length }">{{ 'Please select the artist/s' | lang }}</div>
+          </div>
+          <div class="input information">
+            <label>
+              <i class="icon ion-ios-information"></i>
+              <textarea placeholder="{{ 'information' | lang }}" name="description" ng-model="form.input.description" ng-blur="blur('description')"></textarea>
+            </label>
+            <div class="message error" ng-class="{ show: blurred('description') && !form.input.description }">{{ 'Please add the basic information about the event' | lang }}</div>
+          </div>
+          <div class="input admission-fee">
+            <label>
+              <i class="icon ion-social-euro"></i>
+              <input type="text" placeholder="{{ 'admission fee' | lang }}" name="admissionFee" ng-model="form.input.admissionFee" ng-blur="blur('admissionFee')" />
+            </label>
+            <div class="message error" ng-class="{ show: blurred('admissionFee') && !form.input.admissionFee }">{{ 'Please add admission fee' | lang }}</div>
+          </div>
+          <div class="input opening-hours">
+            <i class="icon ion-android-time"></i>
+            <!--<textarea placeholder="opening hours" name="openingHours" ng-model="form.input.openingHours"></textarea>-->
+            <div class="days">
+            
+              <div class="day group appointment">
+                <label ng-click="toggleAppointment()">
+                  <i class="ion-android-checkbox-outline{{ form.input.openByAppointment ? '': '-blank' }}"></i>
+                  <span class="title" ng-class="{ white: form.input.openByAppointment }">{{ 'open by appointment' | lang }}</span>
+                </label>
+              </div>
+
+              <div class="day group special" ng-class="{ disabled: form.input.openByAppointment }" ng-click="$event.preventDefault();$event.stopPropagation();">
+                <span class="day">{{ 'Short event (max. 1 day)' | lang }}</span>
+                <span class="ranges">
+                  <span class="range" ng-repeat="range in form.input.specialHours track by $index">
+                    <input ng-focus="specialDateFocused($index)" class="date" type="text" placeholder="{{ 'select date' | lang }}" value="{{ range.date | amDateFormat:'DD.MM.YYYY' }}" />
+                    <select ng-model="range.startHour" ng-options="hour as (hour | time) for hour in hours"></select>
+                    <span>-</span>
+                    <select ng-model="range.endHour" ng-options="hour as (hour | time) for hour in hours"></select>
+                    <a class="add-range" ng-click="addSpecial()"><i class="ion-plus-circled"></i></a>
+                    <a class="remove-range" ng-click="removeSpecial($index)"><i class="ion-close-circled"></i></a>
+                  </span>
+                </span>
+              </div>
+              <div class="datepicker" ng-show="specialDateIndex == $index" ng-repeat="range in form.input.specialHours track by $index" date-picker="range.date" min-view="date" max-view="date" ng-click="$event.preventDefault();$event.stopPropagation();"></div>
+              <div class="day group regular" ng-class="{ disabled: (singleDay() || hasSpecial() || form.input.openByAppointment) }" ng-repeat="day in form.input.openingHours track by $index">
+                <span class="day">{{ days[day.day] | lang }}</span>
+                <span class="ranges">
+                  <span class="range" ng-repeat="(rangeIndex, range) in day.hours track by $index">
+                    <select ng-model="range.start" ng-options="hour as (hour | time) for hour in hours"></select>
+                    <span>-</span>
+                    <select ng-model="range.end" ng-options="hour as (hour | time) for hour in hours"></select>
+                    <a class="add-range" ng-click="addHoursRange(day.day)"><i class="ion-plus-circled"></i></a>
+                    <a class="remove-range" ng-click="removeHoursRange(day.day, rangeIndex)"><i class="ion-close-circled"></i></a>
+                  </span>
+                </span>
+
+                <div class="tickboxes">
+                  <div class="tickbox open-whole-day" ng-click="openWholeDayOn(day.day)">
+                    <label>
+                      <i class="ion-android-checkbox-outline{{ isOpenWholeDayOn(day.day) ? '': '-blank' }}"></i>
+                      <span class="title">{{ 'open whole day' | lang }}</span>
+                    </label>
+                  </div>
+                  <div class="tickbox close-on" ng-click="closeOn(day.day)">
+                    <label>
+                      <i class="ion-android-checkbox-outline{{ isClosedOn(day.day) ? '': '-blank' }}"></i>
+                      <span class="title">{{ 'closed' | lang }}</span>
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="message error" ng-class="{ show: (singleDay() && !hasOneSpecialDate()) }">{{ 'Please input special time' | lang }}</div>
+          </div>
+          <div class="input dates" ng-click="$event.preventDefault();$event.stopPropagation();">
+            <label>
+              <i class="icon ion-android-time"></i>
+              <input type="text" placeholder="{{ 'dates' | lang }}" name="dates" ng-model="form.input.dates" ng-focus="showDatepicker()" />
+            </label>
+            <div date-range start="form.dates.start" end="form.dates.end"></div>
+            <div class="message error" ng-class="{ show: !form.input.dates }">{{ 'Please add opening and closing day' | lang }}</div>
+          </div>
+          
+          <!--
+          <div class="input written-in-media">
+            <label>
+              <i class="icon ion-speakerphone"></i>
+              <input type="text" placeholder="{{ 'written in media' | lang }}" name="writtenInMedia" ng-model="form.input.writtenInMedia" />
+            </label>
+          </div>
+          -->
+
+          <div class="input links">
+            <i class="icon ion-speakerphone"></i>
+            <div class="links group">
+              <span class="title">{{ 'links to other pages' | lang }}</span>
+              <span class="links">
+                <span class="link" ng-repeat="link in form.input.links track by $index">
+                  <div>
+                    <input class="title" type="text" ng-model="link.title" placeholder="{{ 'title' | lang }}" />
+                    <a class="remove-range" ng-if="form.input.links.length > 1" ng-click="removeLink($index)"><i class="ion-close-circled"></i></a>
+                    <a class="add-range" ng-if="$last" ng-click="addLink()"><i class="ion-plus-circled"></i></a>
+                  </div>
+                  <div>
+                    <input class="url" type="text" ng-model="link.url" placeholder="{{ 'url' | lang }}" />
+                  </div>
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="input photos">
+            <label>
+              <i class="icon ion-image"></i>
+              <span ng-click="blur('photos')" ngf-select ngf-capture="'camera'" ng-model="files" class="label file" ngf-multiple="true" ngf-allow-dir="true" ngf-accept="'image/*'" ngf-change="upload($files)">{{ 'load images' | lang }}</span>
+            </label>
+            <div class="uploaded">
+              <div id="photo-{{ photo.id }}" class="photo" ng-class="{ loading: photo.loading }" ng-repeat="photo in photos track by $index" index="{{ $index }}">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td class="image">
+                        <i class="icon ion-close" ng-click="removePhoto(photo.id)"></i>
+                        <img ng-src="{{ (root + photo.source) | thumb:120 }}" />
+                      </td>
+                      <td class="info">
+                        <input class="first" type="text" placeholder="{{ 'title' | lang }}" name="photo.title" ng-model="photo.title" />
+                        <!--<input type="text" placeholder="{{ 'caption' | lang }}" name="photo.caption" ng-model="photo.caption" />-->
+                        <tags-input name="photoArtists" ng-model="photo.nonUserArtists" key-property="_id" display-property="fullname" placeholder="{{ (photo.nonUserArtists.length ? 'type artist name' : 'artists') | lang }}" template="tag-template" add-from-autocomplete-only="false" replace-spaces-with-dashes="false" on-tag-added="form.tagAdded($tag)" ng-class="{ empty: !photo.nonUserArtists.length, filled: photo.nonUserArtists.length }">
+                          <!-- <auto-complete min-length="1" debounce-delay="0" template="autocomplete-template"></auto-complete> -->
+                          <!-- source="artists.query($query)" -->
+                        </tags-input>
+                        <div class="message error" ng-class="{ show: photo.blurred && !photo.nonUserArtists.length }">{{ 'Please select the artist/s' | lang }}</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="message error" ng-class="{ show: blurred('photos') && !photos.length }">{{ 'Please load at least one as the banner image of the event' | lang }}</div>
+          </div>
+          <div class="input genre has-set">
+            <i class="icon ion-android-color-palette"></i>
+            <div class="wrap">
+              <h6>{{ 'art genre(s)' | lang }}</h6>
+              <div class="set">
+                <div class="checkbox" ng-repeat="genre in form.genres track by $index" ng-class="{ active: form.genreActive(genre) }">
+                  <label>
+                    <i class="ion-android-checkbox-outline{{ form.genreActive(genre) ? '': '-blank' }}"></i>
+                    <input ng-click="blur('genres')" name="genres" type="checkbox" checklist-model="form.input.genres" checklist-value="genre" />
+                    <span class="title">{{ genre | lang }}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="message error" ng-class="{ show: blurred('genres') && !form.input.genres.length }">{{ 'Please choose at least one art genre' | lang }}</div>
+          </div>
+
+          <!--
+          <div class="input artcache has-set" ng-show="admin">
+            <i class="icon ion-paintbrush"></i>
+            <div class="wrap">
+              <h6>{{ 'art cache' | lang }}</h6>
+              <div class="set">
+                <div class="radio" ng-repeat="choice in artCache.choices" ng-class="{ active: artCache.active(choice) }">
+                  <label>
+                    <i class="ion-android-radio-button-{{ artCache.active(choice) ? 'on': 'off' }}"></i>
+                    <input name="artcache" type="radio" ng-model="artCache.enabled" ng-checked="artCache.active(choice)" value="{{ choice.active }}" />
+                    <span class="title">{{ choice.title | lang }}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          -->
+
+        </div>
+        <div class="buttons">
+          <span ng-class="{ empty: !form.response.message, success: form.response.success, error: !form.response.success }" class="message">{{ form.response.message | lang }}</span>
+          <button type="submit" class="submit"><i class="ion-android-exit rotate-90"></i></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="text/ng-template" id="tag-template">
+    <div class="tag-template">
+      <photo ng-if="data.name.full || data.fullname" user="data" />
+      <span>{{ data.name.full || data.name || data.fullname }}</span>
+      <a class="remove-button" ng-click="$removeTag()"><i class="ion-close-circled"></i></a>
+    </div>
+  </script>
+
+  <script type="text/ng-template" id="autocomplete-template">
+    <div class="autocomplete-template">
+      <photo ng-if="data.name.full || data.fullname" user="data" />
+      <span ng-bind-html="$highlight($getDisplayText())"></span>
+    </div>
+  </script>
+
+  <popup name="'venueDoesNotExist'" data-closed="$parent.focusVenue()">
+    <a class="close" ng-click="close()"><i class="ion-android-close"></i></a>
+    <div class="message">
+      <div class="wrap">
+        No existing venue found<br />
+        Please start by <a ui-sref="venue-create">creating a new venue here</a>
+      </div>
+    </div>
+  </popup>
+
+  <redirector data-state="redirect">
+    <div class="redirector-wrap">
+      <h2>{{ 'Event successfully created' | lang }}</h2>
+      <h4>{{ 'You are now being redirected to the event page in (%%) second(s)' | lang:[$seconds] }}</h4>
+    </div>
+  </redirector>
+
+</div>

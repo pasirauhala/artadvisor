@@ -1,0 +1,152 @@
+
+.preview {
+  background-repeat: no-repeat;
+  background-color: #1a1a1a;
+  background-position: center center;
+  background-size: contain;
+  vertical-align: bottom;
+  height: 600px;
+  clear: both;
+  display: none;
+  position: relative;
+  margin-bottom: 20px;
+
+  @include mobile {
+    display: none !important;
+  }
+  @include tablet {
+    height: 400px;
+  }
+
+  .text {
+    position: absolute;
+    bottom: 0px;
+    font-weight: 200;
+
+    p {
+      padding: 0px 0px 16px 16px;
+    }
+    p.title {
+      text-transform: uppercase;
+      font-size: 0.68em;
+    }
+    p.caption {
+      font-size: 0.68em;
+    }
+    p.exhibition {
+      font-size: 0.9em;
+    }
+  }
+}
+
+.preview.show {
+  display: block;
+}
+
+#modal {
+  z-index: 100000;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  background-color: #000;
+  width: 100%;
+  height: 100%;
+  display: none;
+
+  .close {
+    margin: 24px 0px 0px 24px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 10000;
+
+    i {
+      font-size: 2em;
+    }
+  }
+
+  .wrap {
+    width: 100%;
+    height: 80%;
+    position: fixed;
+    /*
+    top: 50%;
+    transform: translate(0%, -50%);
+    */
+    @include transition(all linear 0.2s);
+
+    @include tablet {
+      height: 70%;
+    }
+    @include mobile {
+      height: 60%;
+    }
+
+    .art {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: auto 100%;
+      background-color: #1a1a1a;
+
+      .nav {
+        transform: translate(0%, -50%);
+
+        i {
+          font-size: 2em;
+        }
+      }
+      .nav.left {
+        position: absolute;
+        top: 50%;
+        left: 24px;
+      }
+      .nav.right {
+        position: absolute;
+        top: 50%;
+        right: 24px;
+      }
+
+      .text {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        font-weight: 200;
+        text-shadow: 1px 1px 1px #222;
+
+        p {
+          padding: 0px 0px 16px 16px;
+        }
+        p.title {
+          text-transform: uppercase;
+          font-size: 0.68em;
+        }
+        p.caption {
+          font-size: 0.68em;
+        }
+        p.exhibition {
+          font-size: 0.9em;
+        }
+      }
+    }
+  }
+
+  &.show {
+    display: block;
+  }
+}
+
+.arts {
+
+  .art {
+    display: none;
+
+    img {
+      cursor: pointer;
+    }
+  }
+  .art.loaded {
+    display: block;
+  }
+}

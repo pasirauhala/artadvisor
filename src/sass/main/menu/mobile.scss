@@ -1,0 +1,36 @@
+
+.mobile {
+  float: left;
+  width: 100%;
+  clear: both;
+  margin-top: -7px;
+
+  @include mobile {
+    display: none;
+  }
+  @include tablet {
+    display: none;
+  }
+
+  ul {
+    list-style-type: none;
+    float: right;
+    margin: 0px;
+
+    li {
+      font-size: 1em;
+      font-weight: normal;
+
+      img {
+        vertical-align: middle;
+      }
+      span {
+        vertical-align: middle;
+      }
+    }
+
+    .google-play {
+      margin-right: 10px;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+<div class="page dashboard" ng-controller="DashboardController">
+  <h2><i class="glyphicon glyphicon-home"></i> Welcome, {{ user.name.full }}</h2>
+
+  <a class="btn btn-primary" href="/artcache" target="_blank">Edit Art Cache</a>
+
+  <table class="table table-striped table-bordered table-hover" style="max-width: 300px; margin-top: 12px;">
+    <tbody>
+
+      <tr>
+        <td>Total Users</td>
+        <td>{{ summary.users }}</td>
+      </tr>
+      <tr>
+        <td>Total Artists</td>
+        <td>{{ summary.artists }}</td>
+      </tr>
+      <tr>
+        <td>Total Events</td>
+        <td>{{ summary.events.total }}</td>
+      </tr>
+      <tr>
+        <td>Active Events</td>
+        <td>{{ summary.events.active }}</td>
+      </tr>
+      <tr>
+        <td>Total Venues</td>
+        <td>{{ summary.venues }}</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</div>

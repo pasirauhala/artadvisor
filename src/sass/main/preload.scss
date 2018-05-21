@@ -1,0 +1,23 @@
+
+/**
+ * Preload fonts
+ */
+
+.brandonGrotesque {
+  font-family: 'Brandon Grotesque';
+}
+.pTSerif {
+  font-family: 'PT Serif';
+}
+.ionicons {
+  font-family: 'Ionicons';
+}
+.fontAwesome {
+  font-family: 'FontAwesome';
+}
+
+body > .preload {
+  height: 1px;
+  visibility: hidden;
+  overflow: hidden;
+}
